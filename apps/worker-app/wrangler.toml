@@ -1,0 +1,25 @@
+name = "remix-cloudflare-workers-template"
+
+main = "./server.ts"
+workers_dev = true
+# https://developers.cloudflare.com/workers/platform/compatibility-dates
+compatibility_date = "2023-04-20"
+
+[site]
+bucket = "../remix-app/build/client"
+
+[durable_objects]
+bindings = [
+  {name = "EXAMPLE_DO", class_name = "ExampleDO", script_name = "remix-cloudflare-workers-template"}
+]
+
+[[migrations]]
+new_classes = ["ExampleDO"]
+tag = "v1"
+
+[env.dev]
+
+[env.dev.durable_objects]
+bindings = [
+  {name = "EXAMPLE_DO", class_name = "ExampleDO", script_name = "remix-cloudflare-workers-template-dev", environment = "dev"}
+]

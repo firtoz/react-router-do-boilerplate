@@ -1,0 +1,8 @@
+{
+  "name": "biome-config",
+  "packageManager": "yarn@4.5.0",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.2"
+  }
+}

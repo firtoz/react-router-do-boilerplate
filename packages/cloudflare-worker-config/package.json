@@ -1,0 +1,8 @@
+{
+    "name": "cloudflare-worker-config",
+    "private": true,
+    "version": "1.0.0",
+    "sideEffects": false,
+    "types": "./types.d.ts",
+    "type": "module"
+}

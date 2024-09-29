@@ -1,0 +1,19 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"tasks": {
+		"build": {
+			"inputs": [
+				"app/**",
+				"public/**",
+				"tailwind.config.ts",
+				"vite.config.ts",
+				"package.json"
+			],
+			"outputs": ["build/**"]
+		},
+		"dev": {
+			"dependsOn": ["worker-app#dev:check"]
+		}
+	}
+}
