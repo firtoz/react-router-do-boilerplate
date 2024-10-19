@@ -2,12 +2,8 @@
   "name": "remix-do-boilerplate",
   "version": "1.0.0",
   "private": true,
-  "description": "This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Yarn and Turborepo for efficient management and building.",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "durable-objects/*"
-  ],
+  "description": "This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Bun and Turborepo for efficient management and building.",
+  "workspaces": ["apps/*", "packages/*", "durable-objects/*"],
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev --ui tui",
@@ -20,5 +16,8 @@
   "devDependencies": {
     "turbo": "^2.1.2"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "bun@1.1.30",
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
 }

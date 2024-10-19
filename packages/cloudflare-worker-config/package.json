@@ -4,5 +4,8 @@
     "version": "1.0.0",
     "sideEffects": false,
     "types": "./types.d.ts",
-    "type": "module"
+    "type": "module",
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20241018.0"
+    }
 }
