@@ -1,6 +1,6 @@
 # Remix Durable Objects Boilerplate
 
-This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Yarn and Turborepo for efficient management and building.
+This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Bun and Turborepo for efficient management and building.
 
 ## Project Structure
 
@@ -14,41 +14,41 @@ The project is organized as follows:
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v20 or later recommended)
-- [Yarn](https://yarnpkg.com/) (v4 or later)
+- [Bun](https://bun.sh/) (latest version)
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/) (v3 or later)
 
-While this project is set up to use Yarn and Turborepo, it may be possible to use npm, though this is not officially supported.
+This project is set up to use Bun and Turborepo. While it may be possible to use npm or Yarn, this is not officially supported.
 
 ## Getting Started
 
 1. Clone this repository
 2. Install dependencies:
    ```
-   yarn
+   bun install
    ```
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn dev`
+### `bun run dev`
 
 Runs the app in development mode.
 Open [http://localhost:5137](http://localhost:5137) to view it in your browser.
 
-### `yarn build`
+### `bun run build`
 
 Builds the app for production.
 
-### `yarn start`
+### `bun run start`
 
-Runs the app in a mock production environment using the results from `yarn build`.
+Runs the app in a mock production environment using the results from `bun run build`.
 
-### `yarn lint`
+### `bun run lint`
 
 Runs the linter across the project.
 
-### `yarn deploy`
+### `bun run deploy`
 
 Deploys the app to Cloudflare in the production configuration.
 
