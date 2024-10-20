@@ -16,6 +16,9 @@ export class WranglerTestSetup<Env> {
 	constructor(
 		private originalWranglerPath: string,
 		private workerPath: string,
+		private config: {
+			environment?: string;
+		} = {},
 	) {
 		this.tempWranglerPath = path.join(
 			os.tmpdir(),
@@ -23,14 +26,10 @@ export class WranglerTestSetup<Env> {
 		);
 	}
 
-	async setup(
-		abortSignal: AbortSignal,
-		config: {
-			environment?: string;
-		} = {},
-	): Promise<void> {
+	async setup(abortSignal: AbortSignal): Promise<void> {
 		const wranglerContent = fs.readFileSync(this.originalWranglerPath, "utf-8");
 		const wranglerConfig = TOML.parse(wranglerContent);
+		const config = this.config;
 
 		if (config.environment && config.environment.length > 0) {
 			wranglerConfig.name =

@@ -5,8 +5,8 @@
 	"type": "module",
 	"main": "./src/index.ts",
 	"scripts": {
-		"test": "npx vitest --run",
-		"test:watch": "npx vitest"
+		"test": "bunx vitest --run",
+		"test:watch": "bunx vitest"
 	},
 	"dependencies": {
 		"hono": "^4.6.5"

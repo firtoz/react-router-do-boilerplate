@@ -5,8 +5,6 @@ import {
 	type TypedFetcher,
 } from "../src/doFetcher";
 
-import { getPlatformProxy, unstable_dev } from "wrangler";
-import type { UnstableDevWorker } from "wrangler";
 import type { TestDurableObject, TestEnv } from "./worker";
 import path from "node:path";
 import { WranglerTestSetup } from "./WranglerTestSetup";
@@ -18,11 +16,11 @@ describe("doFetcher with mock worker", () => {
 	beforeAll(async () => {
 		const originalWranglerPath = path.resolve(__dirname, "wrangler.toml");
 		const workerPath = path.resolve(__dirname, "worker.ts");
-		wranglerSetup = new WranglerTestSetup(originalWranglerPath, workerPath);
-		abortController = new AbortController();
-		await wranglerSetup.setup(abortController.signal, {
+		wranglerSetup = new WranglerTestSetup(originalWranglerPath, workerPath, {
 			environment: "dev",
 		});
+		abortController = new AbortController();
+		await wranglerSetup.setup(abortController.signal);
 	});
 
 	afterAll(async () => {
