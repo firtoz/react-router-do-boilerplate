@@ -1,17 +1,17 @@
-import fs from "node:fs";
 import os from "node:os";
-import TOML from "@iarna/toml";
+import path from "node:path";
+import fs from "node:fs";
 import {
 	type UnstableDevWorker,
 	unstable_dev,
 	getPlatformProxy,
 } from "wrangler";
-import path from "node:path";
+import { WranglerConfigHelper } from "../src/WranglerConfigHelper";
 
 export class WranglerTestSetup<Env> {
-	private tempWranglerPath: string;
 	private worker: UnstableDevWorker | null = null;
 	private platformProxy: { env: Env } | null = null;
+	private wranglerHelper: WranglerConfigHelper;
 
 	constructor(
 		private originalWranglerPath: string,
@@ -20,40 +20,27 @@ export class WranglerTestSetup<Env> {
 			environment?: string;
 		} = {},
 	) {
-		this.tempWranglerPath = path.join(
-			os.tmpdir(),
-			`wrangler-${Date.now()}.toml`,
-		);
+		this.wranglerHelper = new WranglerConfigHelper(originalWranglerPath);
 	}
 
 	async setup(abortSignal: AbortSignal): Promise<void> {
-		const wranglerContent = fs.readFileSync(this.originalWranglerPath, "utf-8");
-		const wranglerConfig = TOML.parse(wranglerContent);
-		const config = this.config;
-
-		if (config.environment && config.environment.length > 0) {
-			wranglerConfig.name =
-				config.environment !== undefined && config.environment.length > 0
-					? `${wranglerConfig.name}-${config.environment}`
-					: wranglerConfig.name;
-			fs.writeFileSync(this.tempWranglerPath, TOML.stringify(wranglerConfig));
-		} else {
-			fs.writeFileSync(this.tempWranglerPath, wranglerContent);
-		}
+		const proxyConfigPath = this.wranglerHelper.prepareEnvironmentConfig(
+			this.config.environment,
+		);
 
 		abortSignal.addEventListener("abort", () => this.cleanup(), { once: true });
 
 		this.worker = await unstable_dev(this.workerPath, {
 			experimental: { disableExperimentalWarning: true },
 			local: true,
-			env: config.environment,
+			env: this.config.environment,
 			config: this.originalWranglerPath,
 			persist: false,
 		});
 
 		this.platformProxy = await getPlatformProxy<Env>({
-			configPath: this.tempWranglerPath,
-			environment: config.environment,
+			configPath: proxyConfigPath,
+			environment: this.config.environment,
 			persist: false,
 		});
 	}
@@ -69,8 +56,6 @@ export class WranglerTestSetup<Env> {
 
 	async cleanup(): Promise<void> {
 		await this.worker?.stop();
-		if (fs.existsSync(this.tempWranglerPath)) {
-			fs.unlinkSync(this.tempWranglerPath);
-		}
+		this.wranglerHelper.cleanup();
 	}
 }

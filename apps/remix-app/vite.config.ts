@@ -4,30 +4,19 @@ import {
 	cloudflareDevProxyVitePlugin,
 } from "@remix-run/dev";
 import tsconfigPaths from "vite-tsconfig-paths";
-
-import fs from "node:fs";
-import * as TOML from "@iarna/toml";
 import path from "node:path";
+import { WranglerConfigHelper } from "../../packages/hono-do-fetcher/src/WranglerConfigHelper";
 
-// Read the original wrangler.toml
 const wranglerPath = path.resolve(__dirname, "../worker-app/wrangler.toml");
-const wranglerContent = fs.readFileSync(wranglerPath, "utf-8");
-const wranglerConfig = TOML.parse(wranglerContent);
 
-// Modify the name
-wranglerConfig.name = `${wranglerConfig.name}-dev`;
-
-// Write the new wrangler.dev.toml
-const devWranglerPath = path.resolve(
-	__dirname,
-	"../worker-app/wrangler.dev.toml",
-);
-fs.writeFileSync(devWranglerPath, TOML.stringify(wranglerConfig));
+const devConfigPath = new WranglerConfigHelper(
+	wranglerPath,
+).prepareEnvironmentConfig("dev");
 
 export default defineConfig({
 	plugins: [
 		cloudflareDevProxyVitePlugin({
-			configPath: devWranglerPath,
+			configPath: devConfigPath,
 			environment: "dev",
 			persist: {
 				path: "../worker-app/.wrangler/state/v3",
