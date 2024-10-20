@@ -36,6 +36,7 @@ describe("honoFetcher", () => {
 				const { item } = await c.req.json();
 				return c.json({ success: true, item });
 			} catch (e) {
+				console.error(e);
 				return c.json({ success: false }, 400);
 			}
 		})
@@ -47,8 +48,9 @@ describe("honoFetcher", () => {
 					item: z.string(),
 				}),
 			),
-			(c) => {
-				return c.json({ success: true });
+			async (c) => {
+				const body = c.req.valid("form");
+				return c.json({ success: true, body });
 			},
 		)
 		.post(
@@ -59,8 +61,9 @@ describe("honoFetcher", () => {
 					item: z.string(),
 				}),
 			),
-			(c) => {
-				return c.json({ success: true });
+			async (c) => {
+				const body = c.req.valid("json");
+				return c.json({ success: true, body });
 			},
 		);
 	let fetcher: TypedHonoFetcher<typeof app>;
@@ -173,12 +176,16 @@ describe("honoFetcher", () => {
 			expectTypeOf(
 				// @ts-expect-error - Incorrect body type
 				fetcher.post("/items-json", { wrongKey: "value" }),
-			).toEqualTypeOf<Promise<JsonResponse<{ success: boolean }>>>();
+			).toEqualTypeOf<
+				Promise<JsonResponse<{ success: boolean; body: { item: string } }>>
+			>();
 
 			expectTypeOf(
 				// @ts-expect-error - Incorrect body type
 				fetcher.post("/items-json", { item: "newItem", extra: "property" }),
-			).toEqualTypeOf<Promise<JsonResponse<{ success: boolean }>>>();
+			).toEqualTypeOf<
+				Promise<JsonResponse<{ success: boolean; body: { item: string } }>>
+			>();
 		});
 	});
 });

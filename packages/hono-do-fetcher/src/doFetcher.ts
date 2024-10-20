@@ -1,5 +1,6 @@
 import type { Hono, Schema } from "hono";
 import type { ExtractSchema } from "hono/types";
+import type { HttpMethod, ParsePathParams } from "./honoFetcher";
 
 const DUMMY_URL = "http://dummy-url";
 
@@ -12,17 +13,8 @@ export type DOSchemaMap<T extends DOWithHonoApp> = T extends DOWithHonoApp
 	? ExtractSchema<T["app"]>
 	: never;
 
-type ParsePathParams<T extends string> =
-	T extends `${infer _Start}/:${infer Param}/${infer Rest}`
-		? { [K in Param | keyof ParsePathParams<`/${Rest}`>]: string }
-		: T extends `${infer _Start}/:${infer Param}`
-			? { [K in Param]: string }
-			: never;
-
 export type DOSchemaKeys<T extends DOWithHonoApp> = string &
 	keyof DOSchemaMap<T>;
-
-type HttpMethod = "get" | "post" | "put" | "delete" | "patch";
 
 export type DOStubSchema<T extends DurableObjectStub> =
 	T extends DurableObjectStub<infer S>

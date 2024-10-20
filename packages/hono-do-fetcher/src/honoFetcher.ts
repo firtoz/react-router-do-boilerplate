@@ -1,30 +1,25 @@
-import type { Hono, Schema } from "hono";
+import type { Hono } from "hono";
 import type { ExtractSchema } from "hono/types";
 
-type ParsePathParams<T extends string> =
+export type ParsePathParams<T extends string> =
 	T extends `${infer _Start}/:${infer Param}/${infer Rest}`
 		? { [K in Param | keyof ParsePathParams<`/${Rest}`>]: string }
 		: T extends `${infer _Start}/:${infer Param}`
 			? { [K in Param]: string }
 			: never;
 
-type HttpMethod = "get" | "post" | "put" | "delete" | "patch";
+export type HttpMethod = "get" | "post" | "put" | "delete" | "patch";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type HonoSchemaMap<T extends Hono<any, any>> = ExtractSchema<T>;
+export type HonoSchemaKeys<T extends Hono> = string & keyof ExtractSchema<T>;
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type HonoSchemaKeys<T extends Hono<any, any>> = string & keyof HonoSchemaMap<T>;
+type FilterKeysByMethod<T, M extends HttpMethod> = {
+	[K in keyof T as T[K] extends { [key in `$${M}`]: unknown }
+		? K
+		: never]: T[K];
+};
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type HonoSchema<T extends Hono<any, any>> = {
-	[M in HttpMethod]: {
-		[K in HonoSchemaKeys<T> as HonoSchemaMap<T>[K] extends {
-			[key in `$${M}`]: unknown;
-		}
-			? K
-			: never]: HonoSchemaMap<T>[K];
-	};
+type HonoSchema<T extends Hono> = {
+	[M in HttpMethod]: FilterKeysByMethod<ExtractSchema<T>, M>;
 };
 
 export type JsonResponse<T> = Omit<Response, "json"> & {
@@ -42,8 +37,7 @@ type FetcherParams<SchemaPath extends string> =
 		? [params: ParsePathParams<SchemaPath>, init?: RequestInitWithCf]
 		: [init?: RequestInitWithCf];
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type TypedMethodFetcher<T extends Hono<any, any>, M extends HttpMethod> = <
+type TypedMethodFetcher<T extends Hono, M extends HttpMethod> = <
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 >(
 	url: SchemaPath,
@@ -53,8 +47,7 @@ type TypedMethodFetcher<T extends Hono<any, any>, M extends HttpMethod> = <
 ) => Promise<SchemaOutput<T, M, SchemaPath>>;
 
 type SchemaOutput<
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	T extends Hono<any, any>, //
+	T extends Hono,
 	M extends HttpMethod,
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 	DollarM extends `$${M}` & keyof HonoSchema<T>[M][SchemaPath] = `$${M}` &
@@ -64,8 +57,7 @@ type SchemaOutput<
 	: never;
 
 type BodyParams<
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	T extends Hono<any, any>, //
+	T extends Hono,
 	M extends HttpMethod,
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 	DollarM extends `$${M}` & keyof HonoSchema<T>[M][SchemaPath] = `$${M}` &
@@ -79,25 +71,21 @@ type BodyParams<
 	...rest: FetcherParams<SchemaPath>,
 ];
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-type AvailableMethods<T extends Hono<any, any>> = {
+type AvailableMethods<T extends Hono> = {
 	[M in HttpMethod]: keyof HonoSchema<T>[M] extends never ? never : M;
 }[HttpMethod];
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type TypedHonoFetcher<T extends Hono<any, any>> = {
+export type TypedHonoFetcher<T extends Hono> = {
 	[M in AvailableMethods<T>]: TypedMethodFetcher<T, M>;
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const createMethodFetcher = <T extends Hono<any, any>, M extends HttpMethod>(
+const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 	app: T,
 	method: M,
 ): TypedMethodFetcher<T, M> => {
 	return (async (url: string, ...args) => {
 		let finalUrl = url;
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		let body: any;
+		let body: unknown;
 		let init: RequestInitWithCf = {};
 
 		if (method === "get" || method === "delete") {
@@ -138,10 +126,8 @@ const createMethodFetcher = <T extends Hono<any, any>, M extends HttpMethod>(
 		}
 	}) as TypedMethodFetcher<T, M>;
 };
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const honoFetcher = <T extends Hono<any, any>>(
-	app: T,
-): TypedHonoFetcher<T> => {
+
+export const honoFetcher = <T extends Hono>(app: T): TypedHonoFetcher<T> => {
 	const methods = ["get", "post", "put", "delete", "patch"] as const;
 
 	return methods.reduce(
