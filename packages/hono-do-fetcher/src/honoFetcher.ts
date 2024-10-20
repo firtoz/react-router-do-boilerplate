@@ -80,7 +80,7 @@ export type TypedHonoFetcher<T extends Hono> = {
 };
 
 const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
-	app: T,
+	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,
 	method: M,
 ): TypedMethodFetcher<T, M> => {
 	return (async (url: string, ...args) => {
@@ -111,7 +111,7 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 		}
 
 		try {
-			return await app.request(finalUrl, {
+			return await fetcher(finalUrl, {
 				method: method.toUpperCase(),
 				body: body ? JSON.stringify(body) : undefined,
 				headers: {
@@ -127,7 +127,9 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 	}) as TypedMethodFetcher<T, M>;
 };
 
-export const honoFetcher = <T extends Hono>(app: T): TypedHonoFetcher<T> => {
+export const honoFetcher = <T extends Hono>(
+	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,
+): TypedHonoFetcher<T> => {
 	const methods = ["get", "post", "put", "delete", "patch"] as const;
 
 	return methods.reduce(
@@ -136,7 +138,7 @@ export const honoFetcher = <T extends Hono>(app: T): TypedHonoFetcher<T> => {
 				acc as TypedHonoFetcher<T> & {
 					[M in typeof method]: TypedMethodFetcher<T, M>;
 				}
-			)[method] = createMethodFetcher(app, method) as TypedMethodFetcher<
+			)[method] = createMethodFetcher(fetcher, method) as TypedMethodFetcher<
 				T,
 				typeof method
 			>;
