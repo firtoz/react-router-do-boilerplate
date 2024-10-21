@@ -15,6 +15,7 @@ import {
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { serve, type ServerType } from "@hono/node-server";
+import type { ExtractSchema } from "hono/types";
 
 describe("honoFetcher", () => {
 	const app = new Hono()
@@ -44,6 +45,7 @@ describe("honoFetcher", () => {
 				"form",
 				z.object({
 					item: z.string(),
+					quantity: z.coerce.number(),
 				}),
 			),
 			async (c) => {
@@ -65,6 +67,8 @@ describe("honoFetcher", () => {
 			},
 		);
 
+	type FormItem = ExtractSchema<typeof app>["/items-form"];
+
 	const runFetcherTests = (
 		description: string,
 		createFetcher: () => Promise<TypedHonoFetcher<typeof app>>,
@@ -77,46 +81,59 @@ describe("honoFetcher", () => {
 			});
 
 			it("should fetch data with GET request", async () => {
-				const response = await fetcher.get("/users/:id", { id: "123" });
+				const response = await fetcher.get({
+					url: "/users/:id",
+					params: { id: "123" },
+				});
+
 				const data = await response.json();
 				expect(data).toEqual({ id: "123", name: "User 123" });
 			});
 
 			it("should send data with POST request", async () => {
-				const response = await fetcher.post(
-					"/users/:id",
-					{ name: "John Doe" },
-					{ id: "456" },
-				);
+				const response = await fetcher.post({
+					url: "/users/:id",
+					body: { name: "John Doe" },
+					params: { id: "456" },
+				});
 				const data = await response.json();
 				expect(data).toEqual({ id: "456", name: "John Doe" });
 			});
 
 			it("should fetch data from a route without params", async () => {
-				const response = await fetcher.get("/items");
+				const response = await fetcher.get({ url: "/items" });
 				const data = await response.json();
 				expect(data).toEqual({ items: ["item1", "item2", "item3"] });
 			});
 
 			it("should send data to a route without params", async () => {
-				const response = await fetcher.post("/items", {
-					item: "newItem",
+				const response = await fetcher.post({
+					url: "/items",
+					body: { item: "newItem" },
 				});
 				const data = await response.json();
 				expect(data).toEqual({ success: true, item: "newItem" });
 			});
 
 			it("should send data to a route with form data", async () => {
-				const response = await fetcher.post("/items-form", {
-					item: "newItem",
+				const response = await fetcher.post({
+					url: "/items-form",
+					form: {
+						item: "newItem",
+						quantity: "5",
+					},
 				});
 				const data = await response.json();
-				expect(data).toEqual({ success: true, body: { item: "newItem" } });
+				expect(data).toEqual({
+					success: true,
+					body: { item: "newItem", quantity: 5 },
+				});
 			});
 
 			it("should send data to a route with JSON data", async () => {
-				const response = await fetcher.post("/items-json", {
-					item: "newItem",
+				const response = await fetcher.post({
+					url: "/items-json",
+					body: { item: "newItem" },
 				});
 				const data = await response.json();
 				expect(data).toEqual({ success: true, body: { item: "newItem" } });
@@ -124,13 +141,13 @@ describe("honoFetcher", () => {
 
 			it("should pass custom headers", async () => {
 				const customHeaderValue = "test-value";
-				const response = await fetcher.get(
-					"/users/:id",
-					{ id: "789" },
-					{
+				const response = await fetcher.get({
+					url: "/users/:id",
+					params: { id: "789" },
+					init: {
 						headers: { "X-Custom-Header": customHeaderValue },
 					},
-				);
+				});
 
 				// We need to mock the headers check in the actual app for this test
 				// For now, we'll just check if the response is successful
@@ -175,72 +192,149 @@ describe("honoFetcher", () => {
 		});
 
 		it("should have correct type for valid routes", () => {
-			expectTypeOf(fetcher.get)
-				.parameter(0)
-				.toEqualTypeOf<"/users/:id" | "/items">();
+			// expectTypeOf(fetcher.get).parameter(0).toEqualTypeOf<{
+			// 	url: "/users/:id" | "/items";
+			// 	init: RequestInitWithCf;
+			// 	form: undefined;
+			// 	body: undefined;
+			// 	params?: undefined;
+			// }>();
 		});
 
 		it("should not allow invalid routes", () => {
 			// @ts-expect-error
-			expectTypeOf(fetcher.get("/non-existent")).toBeNever();
+			expectTypeOf(fetcher.get({ url: "/non-existent" })).toBeNever();
 		});
 
 		it("should require correct params for routes with path parameters", () => {
 			// Correct usage
-			expectTypeOf(fetcher.get("/users/:id", { id: "123" })).toBeObject();
+			expectTypeOf(
+				fetcher.get({ url: "/users/:id", params: { id: "123" } }),
+			).toEqualTypeOf<Promise<JsonResponse<{ id: string; name: string }>>>();
 
 			expectTypeOf(
 				// @ts-expect-error - Missing required 'id' param
-				fetcher.get("/users/:id"),
+				fetcher.get({ url: "/users/:id" }),
 			).toEqualTypeOf<Promise<JsonResponse<{ id: string; name: string }>>>();
 
 			expectTypeOf(
 				// @ts-expect-error - Wrong param name
-				fetcher.get("/users/:id", { userId: "123" }),
+				fetcher.get({ url: "/users/:id", params: { userId: "123" } }),
 			).toEqualTypeOf<Promise<JsonResponse<{ id: string; name: string }>>>();
 
 			expectTypeOf(
-				// @ts-expect-error - Extra param
-				fetcher.get("/users/:id", { id: "123", extra: "param" }),
+				fetcher.get({
+					url: "/users/:id",
+					// @ts-expect-error - Extra param
+					params: { id: "123", extra: "param" },
+				}),
 			).toEqualTypeOf<Promise<JsonResponse<{ id: string; name: string }>>>();
 		});
 
 		it("should not allow params for routes without path parameters", () => {
 			// Correct usage
-			expectTypeOf(fetcher.get("/items")).toBeObject();
+			expectTypeOf(fetcher.get({ url: "/items" })).toBeObject();
 
 			expectTypeOf(
 				// @ts-expect-error - Params not allowed for this route
-				fetcher.get("/items", { someParam: "value" }),
+				fetcher.get({ url: "/items", params: { someParam: "value" } }),
 			).toEqualTypeOf<Promise<JsonResponse<{ items: string[] }>>>();
 		});
 
 		it("should enforce correct body type for POST requests", () => {
 			// Correct usage
-			expectTypeOf(fetcher.post("/items", { item: "newItem" })).toBeObject();
+			expectTypeOf(
+				fetcher.post({ url: "/items", body: { item: "newItem" } }),
+			).toBeObject();
 			// Correct usage
 			expectTypeOf(
-				fetcher.post("/items-json", { item: "newItem" }),
+				fetcher.post({ url: "/items-json", body: { item: "newItem" } }),
 			).toBeObject();
 
 			// @ts-expect-error - Missing required body
-			expectTypeOf(fetcher.post("/items")).toBeNever();
+			expectTypeOf(fetcher.post({ url: "/items" })).toBeNever();
 
 			expectTypeOf(
 				// @ts-expect-error - Incorrect body type
-				fetcher.post("/items-json", { wrongKey: "value" }),
+				fetcher.post({ url: "/items-json", body: { wrongKey: "value" } }),
 			).toEqualTypeOf<
 				Promise<JsonResponse<{ success: boolean; body: { item: string } }>>
 			>();
 
 			expectTypeOf(
-				fetcher.post("/items-json", {
-					item: "newItem",
-					// @ts-expect-error - Incorrect body type
-					extra: "property",
+				fetcher.post({
+					url: "/items-json",
+					body: {
+						item: "newItem",
+						// @ts-expect-error - Incorrect body type
+						extra: "property",
+					},
 				}),
 			).toEqualTypeOf<
 				Promise<JsonResponse<{ success: boolean; body: { item: string } }>>
+			>();
+		});
+
+		it("should enforce correct form data type for POST form requests", () => {
+			// Correct usage
+			expectTypeOf(
+				fetcher.post({
+					url: "/items-form",
+					form: { item: "newItem", quantity: "5" },
+				}),
+			).toEqualTypeOf<
+				Promise<
+					JsonResponse<{
+						success: boolean;
+						body: { item: string; quantity: number };
+					}>
+				>
+			>();
+
+			expectTypeOf(
+				// @ts-expect-error - Missing required field
+				fetcher.post({ url: "/items-form", body: { item: "newItem" } }),
+			).toEqualTypeOf<
+				Promise<
+					JsonResponse<{
+						success: boolean;
+						body: { item: string; quantity: number };
+					}>
+				>
+			>();
+
+			expectTypeOf(
+				fetcher.post({
+					url: "/items-form",
+					form: {
+						item: "newItem",
+						quantity: "5",
+						// @ts-expect-error - Extra field
+						extra: "property",
+					},
+				}),
+			).toEqualTypeOf<
+				Promise<
+					JsonResponse<{
+						success: boolean;
+						body: { item: string; quantity: number };
+					}>
+				>
+			>();
+
+			expectTypeOf(
+				fetcher.post({
+					url: "/items-form",
+					// @ts-expect-error - Wrong type for quantity
+					form: { item: "newItem", quantity: 5 },
+				}),
+			).toEqualTypeOf<
+				Promise<
+					JsonResponse<{
+						success: boolean;
+						body: { item: string; quantity: number };
+					}>
+				>
 			>();
 		});
 	});

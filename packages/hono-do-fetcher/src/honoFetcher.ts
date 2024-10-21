@@ -34,16 +34,21 @@ type HasPathParams<T extends string> = T extends `${string}:${string}`
 
 type FetcherParams<SchemaPath extends string> =
 	HasPathParams<SchemaPath> extends true
-		? [params: ParsePathParams<SchemaPath>, init?: RequestInitWithCf]
-		: [init?: RequestInitWithCf];
+		? { params: ParsePathParams<SchemaPath>; init?: RequestInitWithCf }
+		: { params?: never; init?: RequestInitWithCf };
 
 type TypedMethodFetcher<T extends Hono, M extends HttpMethod> = <
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 >(
-	url: SchemaPath,
-	...args: M extends "get" | "delete"
-		? FetcherParams<SchemaPath>
-		: BodyParams<T, M, SchemaPath>
+	request: {
+		url: SchemaPath;
+	} & FetcherParams<SchemaPath> &
+		(M extends "get" | "delete"
+			? {
+					body?: never;
+					form?: never;
+				}
+			: BodyParams<T, M, SchemaPath>),
 ) => Promise<SchemaOutput<T, M, SchemaPath>>;
 
 type SchemaOutput<
@@ -62,14 +67,19 @@ type BodyParams<
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 	DollarM extends `$${M}` & keyof HonoSchema<T>[M][SchemaPath] = `$${M}` &
 		keyof HonoSchema<T>[M][SchemaPath],
-> = [
-	body: "input" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]
-		? "json" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]["input"]
-			? HonoSchema<T>[M][SchemaPath][DollarM]["input"]["json"]
-			: unknown
-		: never,
-	...rest: FetcherParams<SchemaPath>,
-];
+> = "input" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]
+	? "json" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]["input"]
+		? {
+				body: HonoSchema<T>[M][SchemaPath][DollarM]["input"]["json"];
+				form?: never;
+			}
+		: "form" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]["input"]
+			? {
+					body?: never;
+					form: HonoSchema<T>[M][SchemaPath][DollarM]["input"]["form"];
+				}
+			: { body?: unknown; form?: unknown }
+	: { body?: never; form?: never };
 
 type AvailableMethods<T extends Hono> = {
 	[M in HttpMethod]: keyof HonoSchema<T>[M] extends never ? never : M;
@@ -83,39 +93,38 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,
 	method: M,
 ): TypedMethodFetcher<T, M> => {
-	return (async (url: string, ...args) => {
-		let finalUrl = url;
-		let body: unknown;
-		let init: RequestInitWithCf = {};
+	return (async (request) => {
+		let finalUrl: string = request.url;
 
-		if (method === "get" || method === "delete") {
-			const [params, initArg] = args;
-			if (params && typeof params === "object") {
-				finalUrl = Object.entries(params).reduce(
-					(acc, [key, value]) => acc.replace(`:${key}`, value as string),
-					finalUrl,
-				);
+		const { init = {}, params } = request;
+
+		if (params && typeof params === "object") {
+			finalUrl = Object.entries(params).reduce((acc, [key, value]) => {
+				return acc.replace(`:${key}`, value as string);
+			}, finalUrl);
+		}
+
+		let body: unknown = undefined;
+		if (request.form) {
+			const formData = new FormData();
+			for (const [key, value] of Object.entries(request.form)) {
+				formData.append(key, value as string);
 			}
-			init = initArg || {};
-		} else {
-			const [bodyArg, ...rest] = args;
-			body = bodyArg;
-			const [params, initArg] = rest;
-			if (params && typeof params === "object") {
-				finalUrl = Object.entries(params).reduce(
-					(acc, [key, value]) => acc.replace(`:${key}`, value as string),
-					finalUrl,
-				);
-			}
-			init = initArg || {};
+			body = formData;
+		} else if (request.body) {
+			body = JSON.stringify(request.body);
 		}
 
 		try {
 			return await fetcher(finalUrl, {
 				method: method.toUpperCase(),
-				body: body ? JSON.stringify(body) : undefined,
+				body: body ? (body as BodyInit) : undefined,
 				headers: {
-					...(body ? { "Content-Type": "application/json" } : {}),
+					...(body && !request.form
+						? {
+								"Content-Type": "application/json",
+							}
+						: {}),
 					...init.headers,
 				},
 				...init,
@@ -132,7 +141,7 @@ export const honoFetcher = <T extends Hono>(
 ): TypedHonoFetcher<T> => {
 	const methods = ["get", "post", "put", "delete", "patch"] as const;
 
-	return methods.reduce(
+	const result = methods.reduce(
 		(acc, method) => {
 			(
 				acc as TypedHonoFetcher<T> & {
@@ -146,4 +155,6 @@ export const honoFetcher = <T extends Hono>(
 		},
 		{} as TypedHonoFetcher<T>,
 	);
+
+	return result;
 };
