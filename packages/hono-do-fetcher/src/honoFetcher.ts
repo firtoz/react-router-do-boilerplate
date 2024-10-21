@@ -37,8 +37,18 @@ type HasPathParams<T extends string> = T extends `${string}:${string}`
 
 type FetcherParams<SchemaPath extends string> =
 	HasPathParams<SchemaPath> extends true
-		? { params: ParsePathParams<SchemaPath>; init?: RequestInitWithCf }
-		: { params?: never; init?: RequestInitWithCf };
+		? {
+				params: ParsePathParams<SchemaPath>;
+				init?: Omit<RequestInitWithCf, "headers"> & {
+					headers?: Record<string, string>;
+				};
+			}
+		: {
+				params?: never;
+				init?: Omit<RequestInitWithCf, "headers"> & {
+					headers?: Record<string, string>;
+				};
+			};
 
 // biome-ignore lint/complexity/noBannedTypes: We need an empty object to remove the body and form keys from the request object
 type EmptyObject = {};
@@ -98,7 +108,12 @@ export type BaseTypedHonoFetcher<T extends Hono> = {
 };
 
 const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
-	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,
+	fetcher: (
+		request: string,
+		init?: Omit<RequestInit, "headers"> & {
+			headers?: Record<string, string>;
+		},
+	) => ReturnType<T["request"]> | Promise<ReturnType<T["request"]>>,
 	method: M,
 ): TypedMethodFetcher<T, M> => {
 	return (async (request) => {
@@ -154,7 +169,12 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 export type TypedHonoFetcher<T extends Hono> = BaseTypedHonoFetcher<T>;
 
 export const honoFetcher = <T extends Hono>(
-	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,
+	fetcher: (
+		request: string,
+		init?: Omit<RequestInit, "headers"> & {
+			headers?: Record<string, string>;
+		},
+	) => ReturnType<T["request"]> | Promise<ReturnType<T["request"]>>,
 ): TypedHonoFetcher<T> => {
 	const methods = ["get", "post", "put", "delete", "patch"] as const;
 

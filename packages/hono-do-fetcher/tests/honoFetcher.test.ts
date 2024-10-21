@@ -11,12 +11,12 @@ import {
 	honoFetcher,
 	type TypedHonoFetcher,
 	type JsonResponse,
-	// type TypedHonoFetcher,
 } from "../src/honoFetcher";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { serve, type ServerType } from "@hono/node-server";
 import type { ExtractSchema } from "hono/types";
+import { kyHonoFetcher } from "../src/kyHonoFetcher";
 
 describe("honoFetcher", () => {
 	const app = new Hono()
@@ -50,8 +50,13 @@ describe("honoFetcher", () => {
 				}),
 			),
 			async (c) => {
-				const body = c.req.valid("form");
-				return c.json({ success: true, body });
+				try {
+					const body = c.req.valid("form");
+					return c.json({ success: true, body } as const);
+				} catch (e) {
+					console.error(e);
+					return c.json({ success: false } as const, 400);
+				}
 			},
 		)
 		.post(
@@ -161,14 +166,16 @@ describe("honoFetcher", () => {
 		return honoFetcher<typeof app>(app.request);
 	});
 
-	describe("direct fetcher", () => {
+	describe("fetcher helpers", () => {
 		let server: ServerType;
 		let port: number;
+		let baseUrl: string;
 
 		beforeAll(async () => {
 			await new Promise((resolve) => {
 				server = serve(app, (info) => {
 					port = info.port;
+					baseUrl = `http://localhost:${port}`;
 					resolve(true);
 				});
 			});
@@ -178,9 +185,17 @@ describe("honoFetcher", () => {
 			server.close();
 		});
 
-		runFetcherTests("direct fetcher", async () => {
-			return honoFetcher<typeof app>((request, init) => {
-				return fetch(`http://localhost:${port}${request}`, init);
+		describe("direct fetcher", () => {
+			runFetcherTests("direct fetcher", async () => {
+				return honoFetcher<typeof app>((request, init) => {
+					return fetch(`${baseUrl}${request}`, init);
+				});
+			});
+		});
+
+		describe("kyHonoFetcher", () => {
+			runFetcherTests("ky based fetcher", async () => {
+				return kyHonoFetcher<typeof app>(baseUrl);
 			});
 		});
 	});
@@ -285,10 +300,15 @@ describe("honoFetcher", () => {
 				}),
 			).toEqualTypeOf<
 				Promise<
-					JsonResponse<{
-						success: boolean;
-						body: { item: string; quantity: number };
-					}>
+					JsonResponse<
+						| {
+								readonly success: true;
+								readonly body: { item: string; quantity: number };
+						  }
+						| {
+								readonly success: false;
+						  }
+					>
 				>
 			>();
 
@@ -297,10 +317,18 @@ describe("honoFetcher", () => {
 				fetcher.post({ url: "/items-form", body: { item: "newItem" } }),
 			).toEqualTypeOf<
 				Promise<
-					JsonResponse<{
-						success: boolean;
-						body: { item: string; quantity: number };
-					}>
+					JsonResponse<
+						| {
+								readonly success: true;
+								readonly body: {
+									item: string;
+									quantity: number;
+								};
+						  }
+						| {
+								readonly success: false;
+						  }
+					>
 				>
 			>();
 
@@ -316,10 +344,15 @@ describe("honoFetcher", () => {
 				}),
 			).toEqualTypeOf<
 				Promise<
-					JsonResponse<{
-						success: boolean;
-						body: { item: string; quantity: number };
-					}>
+					JsonResponse<
+						| {
+								readonly success: true;
+								readonly body: { item: string; quantity: number };
+						  }
+						| {
+								readonly success: false;
+						  }
+					>
 				>
 			>();
 
@@ -331,10 +364,15 @@ describe("honoFetcher", () => {
 				}),
 			).toEqualTypeOf<
 				Promise<
-					JsonResponse<{
-						success: boolean;
-						body: { item: string; quantity: number };
-					}>
+					JsonResponse<
+						| {
+								readonly success: true;
+								readonly body: { item: string; quantity: number };
+						  }
+						| {
+								readonly success: false;
+						  }
+					>
 				>
 			>();
 		});
@@ -349,10 +387,15 @@ describe("honoFetcher", () => {
 				}),
 			).toEqualTypeOf<
 				Promise<
-					JsonResponse<{
-						success: boolean;
-						body: { item: string; quantity: number };
-					}>
+					JsonResponse<
+						| {
+								readonly success: true;
+								readonly body: { item: string; quantity: number };
+						  }
+						| {
+								readonly success: false;
+						  }
+					>
 				>
 			>();
 
