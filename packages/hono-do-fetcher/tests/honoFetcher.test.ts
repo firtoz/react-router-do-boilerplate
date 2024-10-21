@@ -338,5 +338,34 @@ describe("honoFetcher", () => {
 				>
 			>();
 		});
+
+		it("should not allow both form and body to be specified", () => {
+			expectTypeOf(
+				fetcher.post({
+					url: "/items-form",
+					form: { item: "newItem", quantity: "5" },
+					// @ts-expect-error - Cannot specify both form and body
+					body: { someData: "value" },
+				}),
+			).toEqualTypeOf<
+				Promise<
+					JsonResponse<{
+						success: boolean;
+						body: { item: string; quantity: number };
+					}>
+				>
+			>();
+
+			expectTypeOf(
+				fetcher.post({
+					url: "/items-json",
+					// @ts-expect-error - Cannot specify both form and body
+					form: { item: "newItem" },
+					body: { item: "anotherItem" },
+				}),
+			).toEqualTypeOf<
+				Promise<JsonResponse<{ success: boolean; body: { item: string } }>>
+			>();
+		});
 	});
 });

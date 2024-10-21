@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import type { DOWithHonoApp } from "../src/doFetcher";
 import { DurableObject } from "cloudflare:workers";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 
 export type TestEnv = {
 	TEST: DurableObjectNamespace<TestDurableObject>;
@@ -16,7 +18,6 @@ export class TestDurableObject
 {
 	app = new Hono<TestHonoEnv>()
 		.get("/test", (c) => {
-			console.log("GET /test", this.ctx.id);
 			return c.json({ method: "GET", id: this.ctx.id });
 		})
 		.post("/test", async (c) => {
@@ -31,28 +32,71 @@ export class TestDurableObject
 		.patch("/test", async (c) => {
 			const body = await c.req.json();
 			return c.json({ method: "PATCH", body, id: this.ctx.id });
+		})
+		.post(
+			"/test-json-validated",
+			zValidator(
+				"json",
+				z.object({
+					item: z.string(),
+					quantity: z.number(),
+				}),
+			),
+			async (c) => {
+				const body = c.req.valid("json");
+				return c.json({
+					method: "POST",
+					body,
+					id: this.ctx.id,
+					validated: "json",
+				});
+			},
+		)
+		.post(
+			"/test-form-validated",
+			zValidator(
+				"form",
+				z.object({
+					item: z.string(),
+					quantity: z.coerce.number(),
+				}),
+			),
+			async (c) => {
+				const body = c.req.valid("form");
+				return c.json({
+					method: "POST",
+					body,
+					id: this.ctx.id,
+					validated: "form",
+				});
+			},
+		)
+		.post("/test-json-unvalidated", async (c) => {
+			const body = await c.req.json();
+			return c.json({
+				method: "POST",
+				body,
+				id: this.ctx.id,
+				validated: false,
+			});
+		})
+		.post("/test-form-unvalidated", async (c) => {
+			const body = await c.req.parseBody();
+			return c.json({
+				method: "POST",
+				body,
+				id: this.ctx.id,
+				validated: false,
+			});
 		});
-
-	constructor(ctx: DurableObjectState, env: TestEnv) {
-		super(ctx, env);
-		console.log("TestDurableObject constructor", this.ctx.id);
-	}
 
 	override async fetch(request: Request) {
 		return this.app.fetch(request);
 	}
 }
 
-console.log("worker.ts");
-
 const worker = new Hono<TestHonoEnv>()
-	.get("/test/:id/*", async (c) => {
-		const id = c.req.param("id");
-		const namespace = c.env.TEST;
-		const stub = namespace.get(namespace.idFromString(id));
-		return stub.fetch(c.req.raw);
-	})
-	.post("/test/:id/*", async (c) => {
+	.all("/test/:id/*", async (c) => {
 		const id = c.req.param("id");
 		const namespace = c.env.TEST;
 		const stub = namespace.get(namespace.idFromString(id));
@@ -60,14 +104,4 @@ const worker = new Hono<TestHonoEnv>()
 	})
 	.all("*", (c) => c.text(`Interesting path: ${c.req.url}`));
 
-// console.log("worker", worker);
-
-// throw new Error("test");
 export default worker;
-
-// export default {
-// 	fetch(request: Request, env: TestEnv, ctx: ExecutionContext) {
-// 		console.log("fetch", request, env, ctx);
-// 		return new Response("Hello World");
-// 	},
-// };

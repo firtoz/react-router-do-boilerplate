@@ -72,10 +72,13 @@ type BodyParams<
 > = "input" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]
 	? "json" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]
 		? "form" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]
-			? {
-					body: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["json"];
-					form: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["form"];
-				}
+			?
+					| {
+							body: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["json"];
+					  }
+					| {
+							form: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["form"];
+					  }
 			: {
 					body: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["json"];
 				}
@@ -83,7 +86,7 @@ type BodyParams<
 			? {
 					form: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["form"];
 				}
-			: { body?: unknown; form?: unknown }
+			: { body?: unknown } | { form?: unknown }
 	: EmptyObject;
 
 type AvailableMethods<T extends Hono> = {
