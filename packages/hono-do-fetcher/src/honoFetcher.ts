@@ -12,14 +12,17 @@ export type HttpMethod = "get" | "post" | "put" | "delete" | "patch";
 
 export type HonoSchemaKeys<T extends Hono> = string & keyof ExtractSchema<T>;
 
-type FilterKeysByMethod<T, M extends HttpMethod> = {
-	[K in keyof T as T[K] extends { [key in `$${M}`]: unknown }
+type FilterKeysByMethod<
+	TApp extends ExtractSchema<unknown>,
+	TMethod extends HttpMethod,
+> = {
+	[K in keyof TApp as TApp[K] extends { [key in `$${TMethod}`]: unknown }
 		? K
-		: never]: T[K];
+		: never]: TApp[K];
 };
 
-type HonoSchema<T extends Hono> = {
-	[M in HttpMethod]: FilterKeysByMethod<ExtractSchema<T>, M>;
+type HonoSchema<TApp extends Hono> = {
+	[M in HttpMethod]: FilterKeysByMethod<ExtractSchema<TApp>, M>;
 };
 
 export type JsonResponse<T> = Omit<Response, "json"> & {
@@ -37,18 +40,16 @@ type FetcherParams<SchemaPath extends string> =
 		? { params: ParsePathParams<SchemaPath>; init?: RequestInitWithCf }
 		: { params?: never; init?: RequestInitWithCf };
 
+// biome-ignore lint/complexity/noBannedTypes: We need an empty object to remove the body and form keys from the request object
+type EmptyObject = {};
+
 type TypedMethodFetcher<T extends Hono, M extends HttpMethod> = <
 	SchemaPath extends string & keyof HonoSchema<T>[M],
 >(
 	request: {
 		url: SchemaPath;
 	} & FetcherParams<SchemaPath> &
-		(M extends "get" | "delete"
-			? {
-					body?: never;
-					form?: never;
-				}
-			: BodyParams<T, M, SchemaPath>),
+		(M extends "get" | "delete" ? EmptyObject : BodyParams<T, M, SchemaPath>),
 ) => Promise<SchemaOutput<T, M, SchemaPath>>;
 
 type SchemaOutput<
@@ -62,30 +63,34 @@ type SchemaOutput<
 	: never;
 
 type BodyParams<
-	T extends Hono,
-	M extends HttpMethod,
-	SchemaPath extends string & keyof HonoSchema<T>[M],
-	DollarM extends `$${M}` & keyof HonoSchema<T>[M][SchemaPath] = `$${M}` &
-		keyof HonoSchema<T>[M][SchemaPath],
-> = "input" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]
-	? "json" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]["input"]
-		? {
-				body: HonoSchema<T>[M][SchemaPath][DollarM]["input"]["json"];
-				form?: never;
-			}
-		: "form" extends keyof HonoSchema<T>[M][SchemaPath][DollarM]["input"]
+	TApp extends Hono,
+	TMethod extends HttpMethod,
+	SchemaPath extends string & keyof HonoSchema<TApp>[TMethod],
+	DollarMethod extends `$${TMethod}` &
+		keyof HonoSchema<TApp>[TMethod][SchemaPath] = `$${TMethod}` &
+		keyof HonoSchema<TApp>[TMethod][SchemaPath],
+> = "input" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]
+	? "json" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]
+		? "form" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]
 			? {
-					body?: never;
-					form: HonoSchema<T>[M][SchemaPath][DollarM]["input"]["form"];
+					body: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["json"];
+					form: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["form"];
+				}
+			: {
+					body: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["json"];
+				}
+		: "form" extends keyof HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]
+			? {
+					form: HonoSchema<TApp>[TMethod][SchemaPath][DollarMethod]["input"]["form"];
 				}
 			: { body?: unknown; form?: unknown }
-	: { body?: never; form?: never };
+	: EmptyObject;
 
 type AvailableMethods<T extends Hono> = {
 	[M in HttpMethod]: keyof HonoSchema<T>[M] extends never ? never : M;
 }[HttpMethod];
 
-export type TypedHonoFetcher<T extends Hono> = {
+export type BaseTypedHonoFetcher<T extends Hono> = {
 	[M in AvailableMethods<T>]: TypedMethodFetcher<T, M>;
 };
 
@@ -104,15 +109,22 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 			}, finalUrl);
 		}
 
+		const requestAsOptionalFormBody = request as {
+			form?: unknown;
+			body?: unknown;
+		};
+
 		let body: unknown = undefined;
-		if (request.form) {
+		if (requestAsOptionalFormBody.form) {
 			const formData = new FormData();
-			for (const [key, value] of Object.entries(request.form)) {
+			for (const [key, value] of Object.entries(
+				requestAsOptionalFormBody.form,
+			)) {
 				formData.append(key, value as string);
 			}
 			body = formData;
-		} else if (request.body) {
-			body = JSON.stringify(request.body);
+		} else if (requestAsOptionalFormBody.body) {
+			body = JSON.stringify(requestAsOptionalFormBody.body);
 		}
 
 		try {
@@ -120,7 +132,7 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 				method: method.toUpperCase(),
 				body: body ? (body as BodyInit) : undefined,
 				headers: {
-					...(body && !request.form
+					...(body && !requestAsOptionalFormBody.form
 						? {
 								"Content-Type": "application/json",
 							}
@@ -135,6 +147,8 @@ const createMethodFetcher = <T extends Hono, M extends HttpMethod>(
 		}
 	}) as TypedMethodFetcher<T, M>;
 };
+
+export type TypedHonoFetcher<T extends Hono> = BaseTypedHonoFetcher<T>;
 
 export const honoFetcher = <T extends Hono>(
 	fetcher: (request: string, init?: RequestInit) => ReturnType<T["request"]>,

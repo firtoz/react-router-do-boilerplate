@@ -9,8 +9,9 @@ import {
 import { Hono } from "hono";
 import {
 	honoFetcher,
-	type JsonResponse,
 	type TypedHonoFetcher,
+	type JsonResponse,
+	// type TypedHonoFetcher,
 } from "../src/honoFetcher";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
