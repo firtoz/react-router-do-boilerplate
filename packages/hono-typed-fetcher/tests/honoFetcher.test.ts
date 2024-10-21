@@ -16,7 +16,7 @@ import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { serve, type ServerType } from "@hono/node-server";
 import type { ExtractSchema } from "hono/types";
-import { kyHonoFetcher } from "../src/kyHonoFetcher";
+import { honoKyFetcher } from "../src/honoKyFetcher";
 
 describe("honoFetcher", () => {
 	const app = new Hono()
@@ -195,7 +195,7 @@ describe("honoFetcher", () => {
 
 		describe("kyHonoFetcher", () => {
 			runFetcherTests("ky based fetcher", async () => {
-				return kyHonoFetcher<typeof app>(baseUrl);
+				return honoKyFetcher<typeof app>(baseUrl);
 			});
 		});
 	});
@@ -205,16 +205,6 @@ describe("honoFetcher", () => {
 
 		beforeAll(() => {
 			fetcher = honoFetcher<typeof app>(app.request);
-		});
-
-		it("should have correct type for valid routes", () => {
-			// expectTypeOf(fetcher.get).parameter(0).toEqualTypeOf<{
-			// 	url: "/users/:id" | "/items";
-			// 	init: RequestInitWithCf;
-			// 	form: undefined;
-			// 	body: undefined;
-			// 	params?: undefined;
-			// }>();
 		});
 
 		it("should not allow invalid routes", () => {

@@ -1,0 +1,26 @@
+{
+	"name": "wrangler-config-helper",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"main": "./src/WranglerConfigHelper.ts",
+	"types": "./src/WranglerConfigHelper.ts",
+	"dependencies": {
+		"@iarna/toml": "^2.2.5",
+		"wrangler": "^3.81.0"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20241018.0"
+	},
+	"exports": {
+		".": {
+			"import": "./src/WranglerConfigHelper.ts",
+			"types": "./src/WranglerConfigHelper.ts"
+		},
+		"./WranglerTestSetup": {
+			"import": "./src/WranglerTestSetup.ts",
+			"types": "./src/WranglerTestSetup.ts"
+		}
+	},
+	"files": ["src"]
+}

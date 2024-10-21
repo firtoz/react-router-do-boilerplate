@@ -3,7 +3,7 @@ import {
 	unstable_dev,
 	getPlatformProxy,
 } from "wrangler";
-import { WranglerConfigHelper } from "../src/WranglerConfigHelper";
+import { WranglerConfigHelper } from "./WranglerConfigHelper";
 
 export class WranglerTestSetup<Env> {
 	private worker: UnstableDevWorker | null = null;

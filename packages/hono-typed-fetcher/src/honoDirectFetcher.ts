@@ -1,7 +1,7 @@
 import type { Hono } from "hono";
 import { honoFetcher, type TypedHonoFetcher } from "./honoFetcher";
 
-export const fetchHonoFetcher = <T extends Hono>(
+export const honoDirectFetcher = <T extends Hono>(
 	baseUrl: string,
 ): TypedHonoFetcher<T> => {
 	return honoFetcher<T>((request, init) => {

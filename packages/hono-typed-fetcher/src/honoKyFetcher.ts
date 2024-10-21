@@ -2,7 +2,7 @@ import type { Hono } from "hono";
 import ky from "ky";
 import { honoFetcher, type TypedHonoFetcher } from "./honoFetcher";
 
-export const kyHonoFetcher = <T extends Hono>(
+export const honoKyFetcher = <T extends Hono>(
 	baseUrl: string,
 ): TypedHonoFetcher<T> => {
 	const kyInstance = ky.create({ prefixUrl: baseUrl });

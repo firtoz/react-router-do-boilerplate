@@ -28,7 +28,7 @@ export type TypedFetcher<T extends DurableObjectStub> = TypedHonoFetcher<
 	Hono<any, DOStubSchema<T>>
 >;
 
-export const doFetcher = <const T extends DurableObjectStub>(
+export const honoDoFetcher = <const T extends DurableObjectStub>(
 	durableObject: T,
 ): TypedFetcher<T> => {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -37,20 +37,20 @@ export const doFetcher = <const T extends DurableObjectStub>(
 	});
 };
 
-export const doFetcherWithName = <
+export const honoDoFetcherWithName = <
 	const T extends Rpc.DurableObjectBranded | undefined = undefined,
 >(
 	namespace: DurableObjectNamespace<T>,
 	name: string,
 ): TypedFetcher<DurableObjectStub<T>> => {
-	return doFetcher(namespace.get(namespace.idFromName(name)));
+	return honoDoFetcher(namespace.get(namespace.idFromName(name)));
 };
 
-export const doFetcherWithId = <
+export const honoDoFetcherWithId = <
 	const T extends Rpc.DurableObjectBranded | undefined = undefined,
 >(
 	namespace: DurableObjectNamespace<T>,
 	id: string,
 ): TypedFetcher<DurableObjectStub<T>> => {
-	return doFetcher(namespace.get(namespace.idFromString(id)));
+	return honoDoFetcher(namespace.get(namespace.idFromString(id)));
 };

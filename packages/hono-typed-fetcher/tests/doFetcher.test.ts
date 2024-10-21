@@ -1,13 +1,13 @@
 import { expect, test, describe, beforeAll, afterAll } from "vitest";
 import {
-	doFetcherWithName,
-	doFetcherWithId,
+	honoDoFetcherWithName,
+	honoDoFetcherWithId,
 	type TypedFetcher,
-} from "../src/doFetcher";
+} from "../src/honoDoFetcher";
 
 import type { TestDurableObject, TestEnv } from "./worker";
 import path from "node:path";
-import { WranglerTestSetup } from "./WranglerTestSetup";
+import { WranglerTestSetup } from "wrangler-config-helper/WranglerTestSetup";
 
 describe("doFetcher with mock worker", () => {
 	let wranglerSetup: WranglerTestSetup<TestEnv>;
@@ -156,12 +156,12 @@ describe("doFetcher with mock worker", () => {
 		});
 	};
 
-	runFetcherTests("doFetcherWithName", () =>
-		doFetcherWithName(wranglerSetup.env.TEST, "test-name"),
+	runFetcherTests("honoDoFetcherWithName", () =>
+		honoDoFetcherWithName(wranglerSetup.env.TEST, "test-name"),
 	);
 
-	runFetcherTests("doFetcherWithId", () =>
-		doFetcherWithId(
+	runFetcherTests("honoDoFetcherWithId", () =>
+		honoDoFetcherWithId(
 			wranglerSetup.env.TEST,
 			wranglerSetup.env.TEST.idFromName("test-id").toString(),
 		),
