@@ -3,7 +3,7 @@ import type { DOWithHonoApp } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import { Hono } from "hono";
 
 export class ExampleDO extends DurableObject implements DOWithHonoApp {
-	app = new Hono().get("/", (c) => c.text("Hello World"));
+	app = new Hono().get("/", (c) => c.text("Hello World!"));
 
 	constructor(ctx: DurableObjectState, env: unknown) {
 		console.log("ExampleDO constructor");

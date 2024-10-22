@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
-	"dependencies": {},
+	"dependencies": { "hono": "^4.6.6" },
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241018.0",
 		"@greybox/biome-config": "^1.0.2",
