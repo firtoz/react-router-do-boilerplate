@@ -1,9 +1,10 @@
 {
-	"name": "wrangler-config-helper",
-	"version": "0.0.1",
-	"private": true,
+	"name": "@greybox/wrangler-config-helper",
+	"version": "1.0.0",
+	"private": false,
 	"type": "module",
 	"main": "./src/WranglerConfigHelper.ts",
+	"repository": "git@github.com:greybox3D/wrangler-config-helper.git",
 	"types": "./src/WranglerConfigHelper.ts",
 	"dependencies": {
 		"@iarna/toml": "^2.2.5",
@@ -22,5 +23,7 @@
 			"types": "./src/WranglerTestSetup.ts"
 		}
 	},
-	"files": ["src"]
+	"files": [
+		"src"
+	]
 }

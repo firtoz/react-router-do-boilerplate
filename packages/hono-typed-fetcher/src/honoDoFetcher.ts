@@ -4,10 +4,11 @@ import { honoFetcher, type TypedHonoFetcher } from "./honoFetcher";
 
 const DUMMY_URL = "http://dummy-url";
 
-export type DOWithHonoApp<S extends Schema = Schema> = DurableObject & {
-	// biome-ignore lint/suspicious/noExplicitAny: We need to be able to pass in any schema
-	app: Hono<any, S>;
-};
+export type DOWithHonoApp<S extends Schema = Schema> =
+	Rpc.DurableObjectBranded & {
+		// biome-ignore lint/suspicious/noExplicitAny: We need to be able to pass in any schema
+		app: Hono<any, S>;
+	};
 
 export type DOSchemaMap<T extends DOWithHonoApp> = T extends DOWithHonoApp
 	? ExtractSchema<T["app"]>
@@ -28,7 +29,7 @@ export type TypedFetcher<T extends DurableObjectStub> = TypedHonoFetcher<
 	Hono<any, DOStubSchema<T>>
 >;
 
-export const honoDoFetcher = <const T extends DurableObjectStub>(
+export const honoDoFetcher = <const T extends DurableObjectStub<DOWithHonoApp>>(
 	durableObject: T,
 ): TypedFetcher<T> => {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -38,7 +39,7 @@ export const honoDoFetcher = <const T extends DurableObjectStub>(
 };
 
 export const honoDoFetcherWithName = <
-	const T extends Rpc.DurableObjectBranded | undefined = undefined,
+	const T extends Rpc.DurableObjectBranded & DOWithHonoApp,
 >(
 	namespace: DurableObjectNamespace<T>,
 	name: string,
@@ -47,7 +48,7 @@ export const honoDoFetcherWithName = <
 };
 
 export const honoDoFetcherWithId = <
-	const T extends Rpc.DurableObjectBranded | undefined = undefined,
+	const T extends Rpc.DurableObjectBranded & DOWithHonoApp,
 >(
 	namespace: DurableObjectNamespace<T>,
 	id: string,

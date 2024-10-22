@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
+import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 
 export const meta: MetaFunction = () => {
 	return [
@@ -14,9 +15,12 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	if (!ExampleDO) {
 		throw new Error("EXAMPLE_DO is not defined?");
 	}
-	const stub = ExampleDO.get(ExampleDO.idFromName("default"));
 
-	const response = await stub.fetch("https://example.com/test");
+	const fetcher = honoDoFetcherWithName(ExampleDO, "default");
+
+	const response = await fetcher.get({
+		url: "/",
+	});
 
 	return {
 		message: await response.text(),

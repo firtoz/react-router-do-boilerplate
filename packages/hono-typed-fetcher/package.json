@@ -1,5 +1,5 @@
 {
-	"name": "hono-typed-fetcher",
+	"name": "@greybox/hono-typed-fetcher",
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
@@ -9,12 +9,12 @@
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.1",
-		"hono": "^4.6.5",
+		"hono": "^4.6.6",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241018.0",
-		"wrangler-config-helper": "workspace:*",
+		"@greybox/wrangler-config-helper": "workspace:*",
 		"@hono/node-server": "^1.13.2",
 		"@types/bun": "^1.1.11",
 		"ky": "^1.7.2",
@@ -30,18 +30,20 @@
 			"import": "./src/appHonoFetcher.ts",
 			"types": "./src/appHonoFetcher.ts"
 		},
-		"./fetchHonoFetcher": {
-			"import": "./src/fetchHonoFetcher.ts",
-			"types": "./src/fetchHonoFetcher.ts"
+		"./honoDirectFetcher": {
+			"import": "./src/honoDirectFetcher.ts",
+			"types": "./src/honoDirectFetcher.ts"
 		},
-		"./kyHonoFetcher": {
-			"import": "./src/kyHonoFetcher.ts",
-			"types": "./src/kyHonoFetcher.ts"
+		"./honoDoFetcher": {
+			"import": "./src/honoDoFetcher.ts",
+			"types": "./src/honoDoFetcher.ts"
 		},
-		"./doFetcher": {
-			"import": "./src/doFetcher.ts",
-			"types": "./src/doFetcher.ts"
+		"./honoKyFetcher": {
+			"import": "./src/honoKyFetcher.ts",
+			"types": "./src/honoKyFetcher.ts"
 		}
 	},
-	"files": ["src"]
+	"files": [
+		"src"
+	]
 }

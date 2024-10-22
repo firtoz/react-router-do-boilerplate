@@ -5,7 +5,7 @@ import {
 } from "@remix-run/dev";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "node:path";
-import { WranglerConfigHelper } from "wrangler-config-helper";
+import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 
 const wranglerPath = path.resolve(__dirname, "../worker-app/wrangler.toml");
 

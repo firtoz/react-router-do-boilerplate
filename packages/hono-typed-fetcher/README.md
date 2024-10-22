@@ -1,4 +1,4 @@
-# hono-typed-fetcher
+# @greybox/hono-typed-fetcher
 
 A TypeScript library for creating type-safe fetchers for Hono apps and Cloudflare Durable Objects.
 
@@ -13,7 +13,7 @@ A TypeScript library for creating type-safe fetchers for Hono apps and Cloudflar
 ## Installation
 
 ```bash
-bun add hono-typed-fetcher
+bun add @greybox/hono-typed-fetcher
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ bun add hono-typed-fetcher
 
 ```typescript
 import { Hono } from 'hono';
-import { honoFetcher } from 'hono-typed-fetcher';
+import { honoFetcher } from '@greybox/hono-typed-fetcher';
 
 const app = new Hono()
   .get('/users/:id', (c) => {
@@ -61,7 +61,7 @@ const postData = await postResponse.json();
 #### App-based Fetcher
 
 ```typescript
-import { appHonoFetcher } from 'hono-typed-fetcher/appHonoFetcher';
+import { appHonoFetcher } from '@greybox/hono-typed-fetcher/appHonoFetcher';
 
 const fetcher = appHonoFetcher<typeof app>(app);
 ```
@@ -69,7 +69,7 @@ const fetcher = appHonoFetcher<typeof app>(app);
 #### Direct Fetch-based Fetcher
 
 ```typescript
-import { fetchHonoFetcher } from 'hono-typed-fetcher/fetchHonoFetcher';
+import { fetchHonoFetcher } from '@greybox/hono-typed-fetcher/fetchHonoFetcher';
 
 const fetcher = fetchHonoFetcher<typeof app>('https://api.example.com');
 ```
@@ -77,7 +77,7 @@ const fetcher = fetchHonoFetcher<typeof app>('https://api.example.com');
 #### Ky-based Fetcher
 
 ```typescript
-import { kyHonoFetcher } from 'hono-typed-fetcher/kyHonoFetcher';
+import { kyHonoFetcher } from '@greybox/hono-typed-fetcher/kyHonoFetcher';
 
 const fetcher = kyHonoFetcher<typeof app>('https://api.example.com');
 ```
@@ -85,7 +85,7 @@ const fetcher = kyHonoFetcher<typeof app>('https://api.example.com');
 ### Creating a Durable Object Fetcher
 
 ```typescript
-import { doFetcherWithName, doFetcherWithId } from 'hono-typed-fetcher/doFetcher';
+import { doFetcherWithName, doFetcherWithId } from '@greybox/hono-typed-fetcher/doFetcher';
 
 // Using name
 const nameFetcher = doFetcherWithName(env.MY_DURABLE_OBJECT, 'instance-name');

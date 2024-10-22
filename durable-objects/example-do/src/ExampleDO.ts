@@ -1,16 +1,17 @@
 import { DurableObject } from "cloudflare:workers";
+import type { DOWithHonoApp } from "@greybox/hono-typed-fetcher/honoDoFetcher";
+import { Hono } from "hono";
 
-export class ExampleDO extends DurableObject {
+export class ExampleDO extends DurableObject implements DOWithHonoApp {
+	app = new Hono().get("/", (c) => c.text("Hello World"));
+
 	constructor(ctx: DurableObjectState, env: unknown) {
 		console.log("ExampleDO constructor");
 		super(ctx, env);
 	}
 
 	override async fetch(request: Request) {
-		const url = new URL(request.url);
-		const path = url.pathname.slice(1); // Remove the leading slash
-
-		return new Response(`Hello ${path || "World"}`);
+		return this.app.fetch(request);
 	}
 }
 

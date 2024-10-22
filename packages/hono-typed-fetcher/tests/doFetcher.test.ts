@@ -7,7 +7,7 @@ import {
 
 import type { TestDurableObject, TestEnv } from "./worker";
 import path from "node:path";
-import { WranglerTestSetup } from "wrangler-config-helper/WranglerTestSetup";
+import { WranglerTestSetup } from "@greybox/wrangler-config-helper/WranglerTestSetup";
 
 describe("doFetcher with mock worker", () => {
 	let wranglerSetup: WranglerTestSetup<TestEnv>;
