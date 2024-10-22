@@ -1,9 +1,6 @@
 {
-	"extends": "shared-tsconfig/tsconfig.json",
-	"include": [
-		"cloudflare-worker-config/types.d.ts",
-		"**/*.ts"
-	],
+	"extends": "@greybox/shared-tsconfig/tsconfig.json",
+	"include": ["cloudflare-worker-config/types.d.ts", "**/*.ts"],
 	"compilerOptions": {
 		"types": [
 			"@cloudflare/workers-types",

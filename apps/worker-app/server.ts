@@ -1,8 +1,8 @@
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 import {
-	createRequestHandler,
 	type RequestHandler,
 	type ServerBuild,
+	createRequestHandler,
 } from "@remix-run/cloudflare";
 import __STATIC_CONTENT_MANIFEST from "__STATIC_CONTENT_MANIFEST";
 

@@ -9,7 +9,8 @@
 		"dev:check": "vite-node scripts/check-dev.ts",
 		"dev": "wrangler dev -e dev",
 		"start": "wrangler dev",
-		"lint": "biome lint --write"
+		"lint": "biome check",
+		"lint:fix": "biome check --write"
 	},
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",
@@ -22,12 +23,13 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@cloudflare/workers-types": "^4.20241018.0",
+		"@greybox/biome-config": "^1.0.2",
+		"@greybox/shared-tsconfig": "^1.0.2",
 		"@types/react": "^18.3.11",
 		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
 		"postcss": "^8.4.47",
-		"shared-tsconfig": "workspace:*",
 		"tailwindcss": "^3.4.14",
 		"typescript": "^5.6.3",
 		"vite-node": "^2.1.3",

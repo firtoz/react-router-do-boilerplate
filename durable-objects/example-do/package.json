@@ -4,11 +4,14 @@
 	"private": true,
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
-	"dependencies": {
-		"@greybox/hono-typed-fetcher": "workspace:*"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241018.0",
-		"shared-tsconfig": "workspace:*"
+		"@greybox/biome-config": "^1.0.2",
+		"@greybox/shared-tsconfig": "^1.0.2"
+	},
+	"scripts": {
+		"lint": "biome check",
+		"lint:fix": "biome check --write"
 	}
 }

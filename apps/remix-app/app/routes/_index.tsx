@@ -1,7 +1,7 @@
+import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
-import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 
 export const meta: MetaFunction = () => {
 	return [

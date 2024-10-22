@@ -1,11 +1,11 @@
-import { defineConfig } from "vite";
-import {
-	vitePlugin as remix,
-	cloudflareDevProxyVitePlugin,
-} from "@remix-run/dev";
-import tsconfigPaths from "vite-tsconfig-paths";
 import path from "node:path";
 import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
+import {
+	cloudflareDevProxyVitePlugin,
+	vitePlugin as remix,
+} from "@remix-run/dev";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const wranglerPath = path.resolve(__dirname, "../worker-app/wrangler.toml");
 

@@ -6,10 +6,16 @@ This project is a boilerplate for creating a Remix application with Cloudflare D
 
 The project is organized as follows:
 
-- `apps/remix-app`: Contains the Remix application
-- `apps/worker-app`: Contains the Cloudflare Worker configuration
-- `durable-objects/example-do`: Contains the Example Durable Object
-- `packages`: Contains shared configurations and types
+- `apps/`:
+  - `remix-app`: Contains the Remix application
+  - `worker-app`: Contains the Cloudflare Worker configuration
+- `durable-objects/`:
+  - `example-do`: Contains the Example Durable Object
+- `packages/`:
+  - `biome-config`: Biome (linter/formatter) configuration
+  - `cloudflare-worker-config`: Cloudflare Worker type definitions
+  - `hono-typed-fetcher`: Type-safe fetcher for Hono apps and Durable Objects
+  - `wrangler-config-helper`: Utilities for Wrangler configuration
 
 ## Prerequisites
 
@@ -46,18 +52,39 @@ Runs the app in a mock production environment using the results from `bun run bu
 
 ### `bun run lint`
 
-Runs the linter across the project.
+Runs the linter (Biome) across the project.
+
+### `bun run test`
+
+Runs the tests using Vitest.
 
 ### `bun run deploy`
 
 Deploys the app to Cloudflare in the production configuration.
 
+## Features
+
+- Remix application with Cloudflare Workers
+- Durable Objects integration
+- TypeScript support
+- Tailwind CSS for styling
+- Biome for linting and formatting
+- Vitest for testing
+- Hono for API routing in Durable Objects
+- Custom type-safe fetcher for Hono apps and Durable Objects
+
 ## Learn More
 
-To learn more about Remix and Durable Objects, check out the following resources:
+To learn more about the technologies used in this project, check out the following resources:
 
 - [Remix Documentation](https://remix.run/docs)
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 - [Cloudflare Durable Objects](https://developers.cloudflare.com/workers/learning/using-durable-objects)
+- [Turborepo](https://turbo.build/repo)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Biome](https://biomejs.dev/)
+- [Vitest](https://vitest.dev/)
+- [Hono](https://hono.dev/)
 
 ## Contributing
 
