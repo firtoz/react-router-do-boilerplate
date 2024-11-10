@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 import {
@@ -9,15 +10,16 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 const wranglerPath = path.resolve(__dirname, "../worker-app/wrangler.toml");
 
-const devConfigPath = new WranglerConfigHelper(
+const wranglerEnvironment = "local";
+const patchedWranglerConfigPath = new WranglerConfigHelper(
 	wranglerPath,
-).prepareEnvironmentConfig("dev");
+).prepareEnvironmentConfig(wranglerEnvironment);
 
 export default defineConfig({
 	plugins: [
 		cloudflareDevProxyVitePlugin({
-			configPath: devConfigPath,
-			environment: "dev",
+			configPath: patchedWranglerConfigPath,
+			environment: wranglerEnvironment,
 			persist: {
 				path: "../worker-app/.wrangler/state/v3",
 			},
@@ -27,6 +29,7 @@ export default defineConfig({
 				v3_fetcherPersist: true,
 				v3_relativeSplatPath: true,
 				v3_throwAbortReason: true,
+				v3_singleFetch: true,
 			},
 		}),
 		tsconfigPaths(),

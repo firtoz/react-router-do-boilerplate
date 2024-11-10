@@ -7,7 +7,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev:check": "vite-node scripts/check-dev.ts",
-		"dev": "wrangler dev -e dev",
+		"dev": "wrangler dev -e local",
 		"start": "wrangler dev",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
@@ -22,17 +22,17 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@cloudflare/workers-types": "^4.20241018.0",
-		"@greybox/biome-config": "^1.0.2",
-		"@greybox/shared-tsconfig": "^1.0.2",
-		"@types/react": "^18.3.11",
+		"@cloudflare/workers-types": "^4.20241106.0",
+		"@greybox/biome-config": "^1.1.2",
+		"@greybox/shared-tsconfig": "^1.1.2",
+		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
 		"postcss": "^8.4.47",
 		"tailwindcss": "^3.4.14",
 		"typescript": "^5.6.3",
-		"vite-node": "^2.1.3",
+		"vite-node": "^2.1.4",
 		"wrangler": "3.78.12"
 	},
 	"engines": {

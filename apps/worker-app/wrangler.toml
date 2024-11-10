@@ -1,12 +1,10 @@
 name = "remix-cloudflare-workers-template"
 
-main = "./server.ts"
+main = "./src/server.ts"
 workers_dev = true
 # https://developers.cloudflare.com/workers/platform/compatibility-dates
 compatibility_date = "2023-04-20"
-
-[site]
-bucket = "../remix-app/build/client"
+assets = { directory = "../remix-app/build/client", binding = "ASSETS", not_found_handling = "none" }
 
 [durable_objects]
 bindings = [
@@ -17,9 +15,9 @@ bindings = [
 new_classes = ["ExampleDO"]
 tag = "v1"
 
-[env.dev]
+[env.local]
 
-[env.dev.durable_objects]
+[env.local.durable_objects]
 bindings = [
-  {name = "EXAMPLE_DO", class_name = "ExampleDO", script_name = "remix-cloudflare-workers-template-dev", environment = "dev"}
+  {name = "EXAMPLE_DO", class_name = "ExampleDO", script_name = "remix-cloudflare-workers-template-local"}
 ]
