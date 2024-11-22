@@ -3,17 +3,14 @@
 	"version": "1.0.0",
 	"private": true,
 	"description": "This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Bun and Turborepo for efficient management and building.",
-	"workspaces": [
-		"apps/*",
-		"packages/*",
-		"durable-objects/*"
-	],
+	"workspaces": ["apps/*", "packages/*", "durable-objects/*"],
 	"scripts": {
 		"build": "turbo build",
 		"dev": "turbo dev --ui tui",
-		"test": "turbo test",
+		"test": "bun test",
+		"deploy": "turbo deploy",
 		"test:watch": "turbo test:watch --ui tui",
-		"start": "turbo start",
+		"start": "turbo start --ui tui",
 		"lint": "turbo lint",
 		"lint:fix": "turbo lint:fix"
 	},
@@ -21,10 +18,10 @@
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
-		"turbo": "^2.2.3"
+		"@types/bun": "^1.1.13",
+		"turbo": "^2.3.1",
+		"vitest": "^2.1.5"
 	},
-	"packageManager": "bun@1.1.34",
-	"trustedDependencies": [
-		"@biomejs/biome"
-	]
+	"packageManager": "bun@1.1.36",
+	"trustedDependencies": ["@biomejs/biome"]
 }

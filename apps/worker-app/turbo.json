@@ -5,6 +5,9 @@
 		"deploy": {
 			"dependsOn": ["remix-app#build"]
 		},
+		"start": {
+			"dependsOn": ["remix-app#build"]
+		},
 		"dev:check": {
 			"cache": false
 		}

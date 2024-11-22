@@ -29,7 +29,7 @@ export default defineConfig({
 				v3_fetcherPersist: true,
 				v3_relativeSplatPath: true,
 				v3_throwAbortReason: true,
-				v3_singleFetch: true,
+				// v3_singleFetch: true, // TODO: if this is enabled, the client will fail to load
 			},
 		}),
 		tsconfigPaths(),
@@ -42,7 +42,13 @@ export default defineConfig({
 	resolve: {
 		mainFields: ["browser", "module", "main"],
 	},
+	esbuild: {
+		target: "es2022",
+	},
 	build: {
 		minify: true,
+	},
+	server: {
+		host: "0.0.0.0",
 	},
 });

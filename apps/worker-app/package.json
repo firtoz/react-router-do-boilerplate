@@ -22,17 +22,17 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@cloudflare/workers-types": "^4.20241106.0",
+		"@cloudflare/workers-types": "^4.20241112.0",
 		"@greybox/biome-config": "^1.1.2",
 		"@greybox/shared-tsconfig": "^1.1.2",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
-		"postcss": "^8.4.47",
-		"tailwindcss": "^3.4.14",
+		"postcss": "^8.4.49",
+		"tailwindcss": "^3.4.15",
 		"typescript": "^5.6.3",
-		"vite-node": "^2.1.4",
+		"vite-node": "^2.1.5",
 		"wrangler": "3.78.12"
 	},
 	"engines": {

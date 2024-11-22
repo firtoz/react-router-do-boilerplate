@@ -1,12 +1,13 @@
 {
-    "name": "cloudflare-worker-config",
-    "private": true,
-    "version": "1.0.0",
-    "sideEffects": false,
-    "types": "./types.d.ts",
-    "type": "module",
-    "devDependencies": {
-        "@cloudflare/workers-types": "^4.20241106.0",
-        "@greybox/shared-tsconfig": "^1.1.2"
-    }
+	"name": "cloudflare-worker-config",
+	"private": true,
+	"version": "1.0.0",
+	"sideEffects": false,
+	"types": "types.d.ts",
+	"main": "types.d.ts",
+	"type": "module",
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20241112.0",
+		"@greybox/shared-tsconfig": "^1.1.2"
+	}
 }

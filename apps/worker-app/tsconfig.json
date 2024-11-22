@@ -1,12 +1,8 @@
 {
 	"extends": "@greybox/shared-tsconfig/tsconfig.json",
-	"include": ["cloudflare-worker-config/types.d.ts", "env.d.ts", "**/*.ts"],
+	"include": ["**/*.ts"],
 	"compilerOptions": {
-		"types": [
-			"@remix-run/cloudflare",
-			"@cloudflare/workers-types",
-			"cloudflare-worker-config/types.d.ts"
-		],
+		"types": ["@remix-run/cloudflare", "@cloudflare/workers-types"],
 		"baseUrl": "."
 	}
 }

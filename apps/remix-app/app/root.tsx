@@ -23,6 +23,7 @@ export const links: LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	console.log("Layout");
 	return (
 		<html lang="en">
 			<head>
@@ -41,5 +42,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+	console.log("App");
 	return <Outlet />;
 }

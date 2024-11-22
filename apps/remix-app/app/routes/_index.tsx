@@ -1,6 +1,6 @@
 import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 
 export const meta: MetaFunction = () => {
@@ -36,6 +36,8 @@ export default function Index() {
 		}
 	}, [message]);
 
+	const navigate = useNavigate();
+
 	return (
 		<div className="flex h-screen items-center justify-center">
 			<div className="flex flex-col items-center gap-16">
@@ -43,6 +45,15 @@ export default function Index() {
 					<h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
 						Welcome to <span className="sr-only">Remix</span>
 					</h1>
+					<button
+						type="button"
+						onClick={() => {
+							alert(`clicked, message is: ${message}`);
+						}}
+					>
+						Click me
+					</button>
+					<p>{message}</p>
 					<div className="h-[144px] w-[434px]">
 						<img
 							src="/logo-light.png"

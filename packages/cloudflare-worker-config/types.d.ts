@@ -1,6 +1,4 @@
-type Env = {
-	ASSETS: Fetcher;
-
+export type Env = {
 	EXAMPLE_DO: DurableObjectNamespace<
 		import("../../durable-objects/example-do/src/ExampleDO").ExampleDO
 	>;

@@ -8,6 +8,8 @@
 				"public/**",
 				"tailwind.config.ts",
 				"vite.config.ts",
+				"load-context.ts",
+				"postcss.config.js",
 				"package.json"
 			],
 			"outputs": ["build/**"]
