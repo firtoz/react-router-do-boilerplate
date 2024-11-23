@@ -15,8 +15,8 @@
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",
 		"@greybox/hono-typed-fetcher": "^1.3.0",
-		"@greybox/shared-tsconfig": "^1.2.0",
-		"@greybox/wrangler-config-helper": "^1.4.0",
+		"@greybox/shared-tsconfig": "^1.2.1",
+		"@greybox/wrangler-config-helper": "^1.4.1",
 		"@remix-run/cloudflare": "2.12.1",
 		"@remix-run/react": "^2.15.0",
 		"@remix-run/server-runtime": "^2.15.0",

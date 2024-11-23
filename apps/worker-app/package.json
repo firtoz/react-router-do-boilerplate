@@ -7,7 +7,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev:check": "vite-node scripts/check-dev.ts",
-		"dev": "wrangler dev -e local",
+		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
 		"start": "wrangler dev",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
@@ -24,7 +24,7 @@
 		"@biomejs/biome": "^1.9.4",
 		"@cloudflare/workers-types": "^4.20241112.0",
 		"@greybox/biome-config": "^1.2.0",
-		"@greybox/shared-tsconfig": "^1.2.0",
+		"@greybox/shared-tsconfig": "^1.2.1",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",

@@ -2,7 +2,7 @@ import process from "node:process";
 
 async function checkWorkers(): Promise<boolean> {
 	try {
-		const response = await fetch("http://localhost:6284/workers", {
+		const response = await fetch("http://localhost:8787/", {
 			method: "HEAD",
 		});
 

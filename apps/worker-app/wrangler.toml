@@ -1,9 +1,11 @@
 name = "remix-cloudflare-workers-template"
 
 main = "./src/server.ts"
-workers_dev = true
+ENV = "production"
+workers_dev = false
 # https://developers.cloudflare.com/workers/platform/compatibility-dates
-compatibility_date = "2023-04-20"
+compatibility_date = "2024-09-23"
+compatibility_flags = [ "nodejs_compat" ]
 assets = { directory = "../remix-app/build/client", binding = "ASSETS", not_found_handling = "none" }
 
 [durable_objects]
@@ -16,6 +18,10 @@ new_classes = ["ExampleDO"]
 tag = "v1"
 
 [env.local]
+assets = { directory = "./dummy-assets", binding = "ASSETS", not_found_handling = "none" }
+
+[env.local.vars]
+ENV = "local"
 
 [env.local.durable_objects]
 bindings = [

@@ -4,7 +4,6 @@ import {
 } from "@remix-run/cloudflare";
 import type { Env } from "cloudflare-worker-config";
 import { Hono } from "hono";
-
 export { ExampleDO } from "example-do";
 
 let _handleRemixRequest: RequestHandler | null = null;
@@ -20,16 +19,6 @@ const handleRemixRequest: RequestHandler = async (request, loadContext) => {
 	return _handleRemixRequest(request, loadContext);
 };
 
-(async () => {
-	if (!_handleRemixRequest) {
-		const build = await import("remix-app").catch(() => {
-			console.error("Failed to import remix-app");
-			throw new Error("Failed to import remix-app");
-		});
-		_handleRemixRequest = createRequestHandler(build);
-	}
-})();
-
 const app = new Hono<{
 	Bindings: Env & {
 		ASSETS: Fetcher;
@@ -37,6 +26,10 @@ const app = new Hono<{
 }>()
 	.all("*", async (c, next) => {
 		const { req, env } = c;
+
+		if (env.ENV === "local") {
+			return c.text("Local environment");
+		}
 
 		let response: Response | undefined;
 		try {
@@ -55,6 +48,7 @@ const app = new Hono<{
 	})
 	.all("*", async (c) => {
 		const { req, env } = c;
+
 		const waitUntil = c.executionCtx.waitUntil.bind(c.executionCtx);
 		const passThroughOnException = c.executionCtx.passThroughOnException.bind(
 			c.executionCtx,

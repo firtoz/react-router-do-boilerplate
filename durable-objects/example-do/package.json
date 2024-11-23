@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241112.0",
 		"@greybox/biome-config": "^1.2.0",
-		"@greybox/shared-tsconfig": "^1.2.0"
+		"@greybox/shared-tsconfig": "^1.2.1"
 	},
 	"scripts": {
 		"lint": "biome check",
