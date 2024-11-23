@@ -1,9 +1,9 @@
-import { Hono } from "hono";
 import {
 	type RequestHandler,
 	createRequestHandler,
 } from "@remix-run/cloudflare";
 import type { Env } from "cloudflare-worker-config";
+import { Hono } from "hono";
 
 export { ExampleDO } from "example-do";
 

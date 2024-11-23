@@ -14,12 +14,12 @@
 	},
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",
-		"@greybox/hono-typed-fetcher": "^1.2.5",
-		"@greybox/shared-tsconfig": "^1.1.2",
-		"@greybox/wrangler-config-helper": "^1.3.0",
+		"@greybox/hono-typed-fetcher": "^1.3.0",
+		"@greybox/shared-tsconfig": "^1.2.0",
+		"@greybox/wrangler-config-helper": "^1.4.0",
 		"@remix-run/cloudflare": "2.12.1",
-		"@remix-run/react": "^2.14.0",
-		"@remix-run/server-runtime": "^2.14.0",
+		"@remix-run/react": "^2.15.0",
+		"@remix-run/server-runtime": "^2.15.0",
 		"isbot": "^5.1.17",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
@@ -27,9 +27,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@cloudflare/workers-types": "^4.20241112.0",
-		"@greybox/biome-config": "^1.1.2",
+		"@greybox/biome-config": "^1.2.0",
 		"@iarna/toml": "^2.2.5",
-		"@remix-run/dev": "^2.14.0",
+		"@remix-run/dev": "^2.15.0",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"add": "^2.0.6",
@@ -38,7 +38,7 @@
 		"postcss": "^8.4.49",
 		"tailwindcss": "^3.4.15",
 		"tsx": "^4.19.2",
-		"typescript": "^5.6.3",
+		"typescript": "^5.7.2",
 		"vite": "^5.4.11",
 		"vite-tsconfig-paths": "^5.1.3",
 		"wrangler": "3.78.12"
