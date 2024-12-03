@@ -1,6 +1,6 @@
 name = "react-router-cloudflare-workers-template"
 
-main = "./src/server.ts"
+main = "../web-app/build/server/index.js"
 workers_dev = false
 # https://developers.cloudflare.com/workers/platform/compatibility-dates
 compatibility_date = "2024-09-23"
@@ -21,6 +21,7 @@ ENV = "production"
 
 [env.local]
 assets = { directory = "./dummy-assets", binding = "ASSETS", not_found_handling = "none" }
+main = "./src/server.ts"
 
 [env.local.vars]
 ENV = "local"

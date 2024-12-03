@@ -1,14 +1,13 @@
 import path from "node:path";
-import { vitePluginViteNodeMiniflare } from "@hiogawa/vite-node-miniflare";
 import { reactRouter } from "@react-router/dev/vite";
 import { cloudflareDevProxy } from "@react-router/dev/vite/cloudflare";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
-import { defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(({ isSsrBuild }): UserConfig => {
 	const workerAppDir = path.resolve(__dirname, "../worker-app");
 	const wranglerPath = path.resolve(workerAppDir, "wrangler.toml");
 
@@ -79,5 +78,5 @@ export default defineConfig(({ isSsrBuild }) => {
 		server: {
 			host: "0.0.0.0",
 		},
-	};
+	} satisfies UserConfig;
 });
