@@ -1,11 +1,11 @@
 import path from "node:path";
+import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 import { reactRouter } from "@react-router/dev/vite";
 import { cloudflareDevProxy } from "@react-router/dev/vite/cloudflare";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
-import { defineConfig, type UserConfig } from "vite";
+import { type UserConfig, defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 
 export default defineConfig(({ isSsrBuild }): UserConfig => {
 	const workerAppDir = path.resolve(__dirname, "../worker-app");
