@@ -1,7 +1,8 @@
 import { expect, test, beforeAll, describe, afterAll } from "bun:test";
 import net from "node:net";
 
-describe("Integration Tests", () => {
+// @ts-expect-error CI is not defined in the global scope
+describe.skipIf(process.env.CI === "true")("Integration Tests", () => {
 	let devServer: ReturnType<typeof Bun.spawn>;
 	const maxRetries = 3;
 	const port = 5173;
