@@ -7,7 +7,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev:check": "vite-node scripts/check-dev.ts",
-		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
+		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0 --experimental-registry false",
 		"start": "wrangler dev",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
@@ -32,7 +32,7 @@
 		"tailwindcss": "^3.4.16",
 		"typescript": "^5.7.2",
 		"vite-node": "^2.1.8",
-		"wrangler": "3.78.12"
+		"wrangler": "3.91.0"
 	},
 	"engines": {
 		"node": ">=20.0.0"
