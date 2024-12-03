@@ -1,7 +1,7 @@
 name = "react-router-cloudflare-workers-template"
 
 main = "../web-app/build/server/index.js"
-workers_dev = false
+workers_dev = true
 # https://developers.cloudflare.com/workers/platform/compatibility-dates
 compatibility_date = "2024-09-23"
 compatibility_flags = [ "nodejs_compat" ]
