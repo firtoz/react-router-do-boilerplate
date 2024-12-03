@@ -1,5 +1,5 @@
 {
-	"name": "remix-app",
+	"name": "web-app",
 	"private": true,
 	"version": "1.0.0",
 	"sideEffects": false,
@@ -7,8 +7,9 @@
 	"main": "./build/server/index.js",
 	"types": "./types.d.ts",
 	"scripts": {
-		"build": "NODE_OPTIONS='--import tsx/esm' remix vite:build",
-		"dev": "NODE_OPTIONS='--import tsx/esm' remix vite:dev",
+		"build": "NODE_OPTIONS='--import tsx/esm' react-router build",
+		"dev": "NODE_OPTIONS='--import tsx/esm' concurrently --names \"types,server\" --prefix-colors \"blue.bold,green.bold\" \"react-router typegen --watch\" \"react-router dev\"",
+		"typecheck": "react-router typegen && tsc --build --noEmit",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
 	},
@@ -17,24 +18,26 @@
 		"@greybox/hono-typed-fetcher": "^1.4.0",
 		"@greybox/shared-tsconfig": "^1.2.1",
 		"@greybox/wrangler-config-helper": "^1.5.0",
-		"@remix-run/cloudflare": "2.12.1",
-		"@remix-run/react": "^2.15.0",
-		"@remix-run/server-runtime": "^2.15.0",
+		"@react-router/cloudflare": "^7.0.2",
 		"isbot": "^5.1.17",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"react-router": "^7.0.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@cloudflare/workers-types": "^4.20241202.0",
 		"@greybox/biome-config": "^1.2.0",
+		"@greybox/shared-tsconfig": "^1.2.1",
+		"@hiogawa/vite-node-miniflare": "^0.1.1",
 		"@iarna/toml": "^2.2.5",
-		"@remix-run/dev": "^2.15.0",
+		"@react-router/dev": "^7.0.2",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"add": "^2.0.6",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
+		"concurrently": "^9.1.0",
 		"postcss": "^8.4.49",
 		"tailwindcss": "^3.4.16",
 		"tsx": "^4.19.2",
@@ -45,5 +48,8 @@
 	},
 	"engines": {
 		"node": ">=20.0.0"
+	},
+	"overrides": {
+		"vite": "^6.0.2"
 	}
 }

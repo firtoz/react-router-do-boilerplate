@@ -14,11 +14,10 @@
 	},
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",
-		"@remix-run/cloudflare": "2.12.1",
 		"example-do": "workspace:*",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"remix-app": "workspace:*"
+		"web-app": "workspace:*"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",

@@ -1,23 +1,25 @@
-import {
-	type RequestHandler,
-	createRequestHandler,
-} from "@remix-run/cloudflare";
+import { WorkerEntrypoint } from "cloudflare:workers";
+import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import type { Env } from "cloudflare-worker-config";
+import { ExampleDO } from "example-do";
 import { Hono } from "hono";
-export { ExampleDO } from "example-do";
+import { createRequestHandler } from "react-router";
 
-let _handleRemixRequest: RequestHandler | null = null;
+console.log("ExampleDO", ExampleDO);
 
-const handleRemixRequest: RequestHandler = async (request, loadContext) => {
-	if (!_handleRemixRequest) {
-		const build = await import("remix-app").catch(() => {
-			console.error("Failed to import remix-app");
-			throw new Error("Failed to import remix-app");
+export { ExampleDO };
+
+console.log("import meta env", import.meta.env);
+
+const requestHandler = createRequestHandler(
+	async () => {
+		// @ts-expect-error - virtual module provided by React Router at build time
+		return import("virtual:react-router/server-build").catch(() => {
+			return null;
 		});
-		_handleRemixRequest = createRequestHandler(build);
-	}
-	return _handleRemixRequest(request, loadContext);
-};
+	},
+	import.meta.env?.MODE,
+);
 
 const app = new Hono<{
 	Bindings: Env & {
@@ -27,8 +29,22 @@ const app = new Hono<{
 	.all("*", async (c, next) => {
 		const { req, env } = c;
 
+		console.log("env", env);
+
 		if (env.ENV === "local") {
-			return c.text("Local environment");
+			const ExampleDO = env.EXAMPLE_DO;
+			if (!ExampleDO) {
+				throw new Error("EXAMPLE_DO is not defined?");
+			}
+
+			const fetcher = honoDoFetcherWithName(ExampleDO, "default");
+
+			const response = await fetcher.get({
+				url: "/",
+			});
+			return c.text(
+				`Local environment, ${JSON.stringify(await response.text())}`,
+			);
 		}
 
 		let response: Response | undefined;
@@ -64,7 +80,7 @@ const app = new Hono<{
 					env,
 				},
 			};
-			response = await handleRemixRequest(req.raw, loadContext);
+			response = await requestHandler(req.raw, loadContext);
 		} catch (error) {
 			console.error("root error", error);
 			response = c.text("An unexpected error occurred", { status: 500 });
@@ -73,6 +89,12 @@ const app = new Hono<{
 		return response;
 	});
 
-export default {
-	fetch: app.fetch,
-};
+export default class Server extends WorkerEntrypoint<Env> {
+	override fetch(request: Request) {
+		return app.fetch(request, this.env, this.ctx);
+	}
+}
+
+// export default {
+// 	fetch: app.fetch,
+// } satisfies ExportedHandler<Env>;
