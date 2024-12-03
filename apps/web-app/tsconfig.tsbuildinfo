@@ -1,0 +1,1 @@
+{"root":["./load-context.ts","./react-router.config.ts","./tailwind.config.ts","./types.d.ts","./vite.config.ts","./app/routes.ts","./app/entry.server.tsx","./app/root.tsx","./app/routes/home.tsx"],"version":"5.7.2"}

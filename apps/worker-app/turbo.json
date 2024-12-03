@@ -3,10 +3,10 @@
 	"extends": ["//"],
 	"tasks": {
 		"deploy": {
-			"dependsOn": ["remix-app#build"]
+			"dependsOn": ["web-app#build"]
 		},
 		"start": {
-			"dependsOn": ["remix-app#build"]
+			"dependsOn": ["web-app#build"]
 		},
 		"dev:check": {
 			"cache": false

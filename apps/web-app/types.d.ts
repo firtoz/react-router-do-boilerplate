@@ -1,6 +1,6 @@
-import type { ServerBuild } from "@remix-run/cloudflare";
+import type { ServerBuild } from "react-router";
 
-declare module "remix-app" {
+declare module "web-app" {
 	export const mode: ServerBuild["mode"];
 	export const entry: ServerBuild["entry"];
 	export const routes: ServerBuild["routes"];

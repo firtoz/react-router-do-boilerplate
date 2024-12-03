@@ -1,13 +1,13 @@
-# Remix Durable Objects Boilerplate
+# React Router Durable Objects Boilerplate
 
-This project is a boilerplate for creating a Remix application with Cloudflare Durable Objects. It's set up as a monorepo using Bun and Turborepo for efficient management and building.
+This project is a boilerplate for creating a React Router application with Cloudflare Durable Objects. It's set up as a monorepo using Bun and Turborepo for efficient management and building.
 
 ## Project Structure
 
 The project is organized as follows:
 
 - `apps/`:
-  - `remix-app`: Contains the Remix application
+  - `web-app`: Contains the React Router application
   - `worker-app`: Contains the Cloudflare Worker configuration
 - `durable-objects/`:
   - `example-do`: Contains the Example Durable Object
@@ -64,7 +64,7 @@ Deploys the app to Cloudflare in the production configuration.
 
 ## Features
 
-- Remix application with Cloudflare Workers
+- React Router application with Cloudflare Workers
 - Durable Objects integration
 - TypeScript support
 - Tailwind CSS for styling
@@ -77,7 +77,7 @@ Deploys the app to Cloudflare in the production configuration.
 
 To learn more about the technologies used in this project, check out the following resources:
 
-- [Remix Documentation](https://remix.run/docs)
+- [React Router Documentation](https://reactrouter.com/en/main)
 - [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 - [Cloudflare Durable Objects](https://developers.cloudflare.com/workers/learning/using-durable-objects)
 - [Turborepo](https://turbo.build/repo)

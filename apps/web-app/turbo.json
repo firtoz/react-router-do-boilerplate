@@ -10,6 +10,8 @@
 				"vite.config.ts",
 				"load-context.ts",
 				"postcss.config.js",
+				"../worker-app/wrangler.toml",
+				"../worker-app/**/*.ts",
 				"package.json"
 			],
 			"outputs": ["build/**"]

@@ -2,7 +2,7 @@
 	"extends": "@greybox/shared-tsconfig/tsconfig.json",
 	"include": ["**/*.ts"],
 	"compilerOptions": {
-		"types": ["@remix-run/cloudflare", "@cloudflare/workers-types"],
+		"types": ["@cloudflare/workers-types", "vite/client"],
 		"baseUrl": "."
 	}
 }
