@@ -5,10 +5,10 @@
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
 	"dependencies": {
-		"hono": "^4.6.11"
+		"hono": "^4.6.12"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241112.0",
+		"@cloudflare/workers-types": "^4.20241202.0",
 		"@greybox/biome-config": "^1.2.0",
 		"@greybox/shared-tsconfig": "^1.2.1"
 	},
