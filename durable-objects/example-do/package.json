@@ -15,6 +15,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
+		"dev:check": "vite-node scripts/check-dev.ts",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
 	}

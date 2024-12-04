@@ -12,7 +12,7 @@
 		},
 		"dev:check": {
 			"cache": false,
-			"dependsOn": ["dev:check-worker"]
+			"dependsOn": ["dev:check-worker", "example-do#dev:check"]
 		},
 		"dev:check-worker": {
 			"cache": false

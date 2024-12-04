@@ -5,6 +5,9 @@
 		"dev": {
 			"dependsOn": ["worker-app#dev:check-worker"]
 		},
+		"dev:check": {
+			"cache": false
+		},
 		"deploy": {
 			"inputs": ["wrangler.json", "src/**/*"],
 			"outputLogs": "new-only"
