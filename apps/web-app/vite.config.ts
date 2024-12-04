@@ -6,10 +6,12 @@ import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import { type UserConfig, defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import os from "node:os";
+import fs from "node:fs";
 
 export default defineConfig(({ isSsrBuild }): UserConfig => {
 	const workerAppDir = path.resolve(__dirname, "../worker-app");
-	const wranglerPath = path.resolve(workerAppDir, "wrangler.toml");
+	const wranglerPath = path.resolve(workerAppDir, "wrangler.json");
 
 	const wranglerEnvironment = "local";
 	const patchedWranglerConfigPath = new WranglerConfigHelper(
