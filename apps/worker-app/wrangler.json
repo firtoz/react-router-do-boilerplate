@@ -15,16 +15,10 @@
 			{
 				"name": "EXAMPLE_DO",
 				"class_name": "ExampleDO",
-				"script_name": "react-router-cloudflare-workers-template"
+				"script_name": "example-do"
 			}
 		]
 	},
-	"migrations": [
-		{
-			"new_classes": ["ExampleDO"],
-			"tag": "v1"
-		}
-	],
 	"vars": {
 		"ENV": "production"
 	},
@@ -44,7 +38,7 @@
 					{
 						"name": "EXAMPLE_DO",
 						"class_name": "ExampleDO",
-						"script_name": "react-router-cloudflare-workers-template-local",
+						"script_name": "example-do-local",
 						"environment": "local"
 					}
 				]

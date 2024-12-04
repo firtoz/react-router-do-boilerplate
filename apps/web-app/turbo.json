@@ -10,11 +10,12 @@
 				"vite.config.ts",
 				"load-context.ts",
 				"postcss.config.js",
-				"../worker-app/wrangler.toml",
+				"../worker-app/wrangler.json",
 				"../worker-app/**/*.ts",
 				"package.json"
 			],
-			"outputs": ["build/**"]
+			"outputs": ["build/**"],
+			"outputLogs": "new-only"
 		},
 		"dev": {
 			"dependsOn": ["worker-app#dev:check"]

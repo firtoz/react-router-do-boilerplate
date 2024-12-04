@@ -4,7 +4,7 @@ import { Hono } from "hono";
 
 export class ExampleDO extends DurableObject implements DOWithHonoApp {
 	app = new Hono().get("/", (c) => {
-		return c.text("Hello World from Durable Object!");
+		return c.text("Hello World from ExampleDurable Object.");
 	});
 
 	constructor(ctx: DurableObjectState, env: unknown) {

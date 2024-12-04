@@ -13,6 +13,8 @@
 		"@greybox/shared-tsconfig": "^1.2.1"
 	},
 	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"
 	}

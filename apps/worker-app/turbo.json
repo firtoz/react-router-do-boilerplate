@@ -3,12 +3,18 @@
 	"extends": ["//"],
 	"tasks": {
 		"deploy": {
-			"dependsOn": ["web-app#build"]
+			"dependsOn": ["web-app#build", "example-do#deploy"],
+			"inputs": ["wrangler.json", "../../web-app/build/**/*"],
+			"outputLogs": "new-only"
 		},
 		"start": {
 			"dependsOn": ["web-app#build"]
 		},
 		"dev:check": {
+			"cache": false,
+			"dependsOn": ["dev:check-worker"]
+		},
+		"dev:check-worker": {
 			"cache": false
 		}
 	}

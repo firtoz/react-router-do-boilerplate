@@ -2,9 +2,12 @@
 	"$schema": "../../node_modules/wrangler/config-schema.json",
 	"name": "example-do",
 	"main": "./src/ExampleDO.ts",
-	"workers_dev": true,
+	"workers_dev": false,
 	"compatibility_date": "2024-09-23",
 	"compatibility_flags": ["nodejs_compat"],
+	"dev": {
+		"port": 8788
+	},
 	"durable_objects": {
 		"bindings": [
 			{
@@ -16,8 +19,8 @@
 	},
 	"migrations": [
 		{
-			"new_classes": ["ExampleDO"],
-			"tag": "v1"
+			"tag": "v1",
+			"new_classes": ["ExampleDO"]
 		}
 	],
 	"vars": {
