@@ -5,11 +5,6 @@
 	"workers_dev": true,
 	"compatibility_date": "2024-09-23",
 	"compatibility_flags": ["nodejs_compat"],
-	"assets": {
-		"directory": "../web-app/build/client",
-		"binding": "ASSETS",
-		"not_found_handling": "none"
-	},
 	"durable_objects": {
 		"bindings": [
 			{
@@ -30,11 +25,6 @@
 	},
 	"env": {
 		"local": {
-			"assets": {
-				"directory": "./dummy-assets",
-				"binding": "ASSETS",
-				"not_found_handling": "none"
-			},
 			"vars": {
 				"ENV": "local"
 			},
