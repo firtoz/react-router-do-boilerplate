@@ -5,7 +5,7 @@ import { Hono } from "hono";
 
 export class ExampleDO extends DurableObject implements DOWithHonoApp {
 	app = new Hono().get("/", (c) => {
-		return c.text("Hello World from ExampleDurable Object.");
+		return c.text("Hello World from the Example Durable Object.");
 	});
 
 	constructor(ctx: DurableObjectState, env: unknown) {
@@ -19,7 +19,7 @@ export class ExampleDO extends DurableObject implements DOWithHonoApp {
 }
 
 const app = new Hono().get("/", (c) => {
-	return c.text("Hello World from ExampleDurable Object.");
+	return c.text("Hello World, from the Example Durable Object.");
 });
 
 export default class Server extends WorkerEntrypoint<Env> {

@@ -3,7 +3,7 @@
 	"extends": ["//"],
 	"tasks": {
 		"deploy": {
-			"dependsOn": ["web-app#build", "example-do#deploy"],
+			"dependsOn": ["web-app#build"],
 			"inputs": ["wrangler.json", "../../web-app/build/**/*"],
 			"outputLogs": "new-only"
 		},
