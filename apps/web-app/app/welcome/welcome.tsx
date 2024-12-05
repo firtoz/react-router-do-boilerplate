@@ -1,9 +1,29 @@
+import type React from "react";
+import { PointerComponent } from "./PointerComponent";
+import { useLiveParticipants } from "./hooks/useLiveParticipants";
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
 
-export function Welcome({ message }: { message: React.ReactNode }) {
+export function Welcome({
+	env,
+	message,
+}: { env: "local" | "production"; message: React.ReactNode }) {
+	const { participants, containerRef } = useLiveParticipants(env);
+
 	return (
-		<main className="flex items-center justify-center pt-16 pb-4">
+		<main className="flex items-center justify-center pt-16 pb-4 touch-none">
+			<div className="absolute inset-0 pointer-events-none overflow-hidden">
+				{Array.from(participants.values()).map((participant) =>
+					participant.pointers.map((pointer) => (
+						<PointerComponent
+							key={`${participant.id}-${pointer.pointerId}`}
+							pointer={pointer}
+							color={participant.color}
+							containerRef={containerRef}
+						/>
+					)),
+				)}
+			</div>
 			<div className="flex-1 flex flex-col items-center gap-16 min-h-0">
 				<header className="flex flex-col items-center gap-9">
 					<div className="w-[500px] max-w-[100vw] p-4">
@@ -19,7 +39,7 @@ export function Welcome({ message }: { message: React.ReactNode }) {
 						/>
 					</div>
 				</header>
-				<div className="max-w-[300px] w-full space-y-6 px-4">
+				<div ref={containerRef} className="max-w-[300px] w-full space-y-6 px-4">
 					<nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
 						<p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
 							What&apos;s next?
@@ -39,6 +59,9 @@ export function Welcome({ message }: { message: React.ReactNode }) {
 								</li>
 							))}
 							<li className="self-stretch p-3 leading-normal">{message}</li>
+							<li className="self-stretch p-3 leading-normal">
+								Live visitors: {participants.size + 1}
+							</li>
 						</ul>
 					</nav>
 				</div>

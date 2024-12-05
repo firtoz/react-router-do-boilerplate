@@ -79,6 +79,10 @@ export default defineConfig(({ isSsrBuild }): UserConfig => {
 		},
 		server: {
 			host: "0.0.0.0",
+			hmr: {
+				clientPort: 5175,
+				port: 5175,
+			},
 		},
 	} satisfies UserConfig;
 });

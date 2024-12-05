@@ -1,8 +1,8 @@
 import { honoDoFetcherWithName } from "@greybox/hono-typed-fetcher/honoDoFetcher";
+import React from "react";
 import { Await, useLoaderData } from "react-router";
 import { Welcome } from "~/welcome/welcome";
 import type { Route } from "./+types/home";
-import React from "react";
 
 export function meta(_args: Route.MetaArgs) {
 	return [
@@ -20,27 +20,29 @@ export const loader = async ({ context }: Route.LoaderArgs) => {
 	const fetcher = honoDoFetcherWithName(ExampleDO, "default");
 
 	return {
+		env: context.cloudflare.env.ENV,
 		getMessage: fetcher
 			.get({
 				url: "/",
 			})
 			.then((r) => r.text()),
-		postMessage: fetcher
+		postData: fetcher
 			.post({
 				url: "/test",
 				body: {
 					name: "John Doe",
 				},
 			})
-			.then((r) => r.text()),
+			.then((r) => r.json()),
 	};
 };
 
 export default function Index() {
-	const { getMessage, postMessage } = useLoaderData<typeof loader>();
+	const { getMessage, postData, env } = useLoaderData<typeof loader>();
 
 	return (
 		<Welcome
+			env={env}
 			message={
 				<React.Fragment>
 					<React.Suspense fallback={<div>GET: ...</div>}>
@@ -49,8 +51,8 @@ export default function Index() {
 						</Await>
 					</React.Suspense>
 					<React.Suspense fallback={<div>POST: ...</div>}>
-						<Await resolve={postMessage}>
-							{(message) => <div>{message}</div>}
+						<Await resolve={postData}>
+							{(data) => <div>{data.message}</div>}
 						</Await>
 					</React.Suspense>
 				</React.Fragment>
