@@ -7,12 +7,12 @@
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.1",
 		"@types/color": "^4.2.0",
-		"hono": "^4.6.12",
+		"hono": "^4.6.13",
 		"perfect-cursors": "^1.0.5",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241202.0",
+		"@cloudflare/workers-types": "^4.20241205.0",
 		"@greybox/biome-config": "^1.2.0",
 		"@greybox/shared-tsconfig": "^1.2.1",
 		"color": "^4.2.3"
