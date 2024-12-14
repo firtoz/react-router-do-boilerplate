@@ -1,0 +1,20 @@
+{
+	"name": "integration-tests",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"test": "NODE_OPTIONS='--import tsx/esm' vitest run",
+		"test:watch": "NODE_OPTIONS='--import tsx/esm' vitest"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.5.36",
+		"@cloudflare/workers-types": "^4.20241205.0",
+		"@types/node": "^22.10.2",
+		"@vitest/utils": "2.1.8",
+		"example-do": "workspace:*",
+		"typescript": "^5.7.2",
+		"vitest": "2.1.8",
+		"worker-app": "workspace:*",
+		"wrangler": "^3.95.0"
+	}
+}

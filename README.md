@@ -15,6 +15,7 @@ The project is organized as follows:
   - `biome-config`: Biome (linter/formatter) configuration
   - `cloudflare-worker-config`: Cloudflare Worker type definitions
   - `hono-typed-fetcher`: Type-safe fetcher for Hono apps and Durable Objects
+  - `integration-tests`: End-to-end tests for Workers and Durable Objects
   - `wrangler-config-helper`: Utilities for Wrangler configuration
 
 ## Prerequisites
@@ -56,7 +57,9 @@ Runs the linter (Biome) across the project.
 
 ### `bun run test`
 
-Runs the tests using Vitest.
+Runs the tests using Vitest. This includes:
+- Unit tests for individual packages
+- Integration tests for Workers and Durable Objects using Miniflare environment
 
 ### `bun run deploy`
 
@@ -70,6 +73,8 @@ Deploys the app to Cloudflare in the production configuration.
 - Tailwind CSS for styling
 - Biome for linting and formatting
 - Vitest for testing
+  - Unit tests for packages
+  - Integration tests with Miniflare environment
 - Hono for API routing in Durable Objects
 - Custom type-safe fetcher for Hono apps and Durable Objects
 

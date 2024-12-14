@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 import { reactRouter } from "@react-router/dev/vite";
