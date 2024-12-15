@@ -1,3 +1,5 @@
+import process from "node:process";
+
 interface CloudflareResponse {
 	success: boolean;
 	errors: Array<{

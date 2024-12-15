@@ -13,8 +13,7 @@
 		"deploy:durable-objects": "bun --env-file .env turbo deploy-durable-objects",
 		"test:watch": "turbo test:watch --ui tui",
 		"start": "turbo start --ui tui",
-		"lint": "turbo lint",
-		"lint:fix": "turbo lint:fix"
+		"lint": "turbo lint"
 	},
 	"keywords": [],
 	"author": "",

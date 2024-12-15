@@ -10,8 +10,7 @@
 		"build": "NODE_OPTIONS='--import tsx/esm' react-router build",
 		"dev": "NODE_OPTIONS='--import tsx/esm' react-router dev",
 		"typecheck": "react-router typegen && tsc --build --noEmit",
-		"lint": "biome check",
-		"lint:fix": "biome check --write"
+		"lint": "tsc --noEmit && biome check --write"
 	},
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",

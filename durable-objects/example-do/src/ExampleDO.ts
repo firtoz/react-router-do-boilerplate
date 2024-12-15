@@ -5,7 +5,6 @@ import type {
 	ClientMessage,
 	Env,
 	LiveParticipant,
-	Pointer,
 	ServerMessage,
 } from "cloudflare-worker-config";
 import Color from "color";

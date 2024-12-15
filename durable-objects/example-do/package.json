@@ -21,7 +21,6 @@
 		"deploy-durable-objects": "wrangler deploy",
 		"build": "wrangler deploy --dry-run --outdir=dist",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
-		"lint": "biome check",
-		"lint:fix": "biome check --write"
+		"lint": "tsc --noEmit && biome check --write"
 	}
 }

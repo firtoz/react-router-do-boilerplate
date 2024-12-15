@@ -1,6 +1,6 @@
 {
 	"extends": "@greybox/shared-tsconfig/tsconfig.json",
-	"include": ["**/*.ts"],
+	"include": ["src/**/*.ts"],
 	"compilerOptions": {
 		"types": ["@cloudflare/workers-types", "vite/client"],
 		"baseUrl": "."

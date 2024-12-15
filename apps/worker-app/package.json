@@ -11,8 +11,7 @@
 		"dev:check-worker": "vite-node scripts/check-worker.ts",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
 		"start": "wrangler dev",
-		"lint": "biome check",
-		"lint:fix": "biome check --write"
+		"lint": "tsc --noEmit && tsc --noEmit --project ./scripts/tsconfig.json && biome check --write"
 	},
 	"dependencies": {
 		"@cloudflare/kv-asset-handler": "^0.3.4",
@@ -24,6 +23,7 @@
 		"@cloudflare/workers-types": "^4.20241205.0",
 		"@greybox/biome-config": "^1.3.0",
 		"@greybox/shared-tsconfig": "^1.3.0",
+		"@types/node": "^22.10.2",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
 		"postcss": "^8.4.49",
