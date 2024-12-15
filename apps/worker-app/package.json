@@ -7,8 +7,8 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"check-wrangler-env": "bun scripts/check-wrangler-env.ts",
-		"dev:check": "vite-node scripts/check-durable-objects.ts",
-		"dev:check-worker": "vite-node scripts/check-worker.ts",
+		"dev:check": "bun scripts/check-durable-objects.ts",
+		"dev:check-worker": "bun scripts/check-worker.ts",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
 		"start": "wrangler dev",
 		"lint": "tsc --noEmit && tsc --noEmit --project ./scripts/tsconfig.json && biome check --write"

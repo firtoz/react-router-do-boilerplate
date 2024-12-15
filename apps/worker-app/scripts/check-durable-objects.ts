@@ -25,10 +25,10 @@ async function sleep(ms: number): Promise<void> {
 
 async function main() {
 	const durableObjectDir = path.join(
-		__dirname,
-		"..",
-		"..",
-		"..",
+		__dirname, // project root/apps/worker-app/scripts
+		"..", // project root/apps/worker-app
+		"..", // project root/apps
+		"..", // project root
 		"durable-objects",
 	);
 	const durableObjectFolders = fs.readdirSync(durableObjectDir);
