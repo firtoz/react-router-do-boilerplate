@@ -5,7 +5,8 @@
 		"deploy": {
 			"dependsOn": ["web-app#build"],
 			"inputs": ["wrangler.json", "../../web-app/build/**/*"],
-			"outputLogs": "new-only"
+			"outputLogs": "new-only",
+			"passThroughEnv": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]
 		},
 		"start": {
 			"dependsOn": ["web-app#build"]

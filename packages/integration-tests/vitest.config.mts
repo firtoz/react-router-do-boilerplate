@@ -26,10 +26,6 @@ export default defineWorkersConfig({
 							modules: true,
 							modulesRoot: path.resolve("../.."),
 							scriptPath: path.join(exampleDoPath, "dist/ExampleDO.js"),
-							script: fs.readFileSync(
-								path.join(exampleDoPath, "dist/ExampleDO.js"),
-								"utf8",
-							),
 							compatibilityDate: ExampleDOWranglerConfig.compatibility_date,
 							compatibilityFlags: ExampleDOWranglerConfig.compatibility_flags,
 							durableObjects: {
