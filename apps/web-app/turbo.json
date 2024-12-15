@@ -7,11 +7,12 @@
 				"app/**",
 				"public/**",
 				"tailwind.config.ts",
+				"react-router.config.ts",
 				"vite.config.ts",
 				"load-context.ts",
 				"postcss.config.js",
 				"../worker-app/wrangler.json",
-				"../worker-app/**/*.ts",
+				"../worker-app/src/**/*.ts",
 				"package.json"
 			],
 			"outputs": ["build/**"],
