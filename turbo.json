@@ -19,12 +19,8 @@
 			"persistent": true,
 			"cache": false
 		},
-		"lint": {
-			"cache": false
-		},
-		"lint:fix": {
-			"cache": false
-		}
+		"lint": {},
+		"lint:fix": {}
 	},
 	"ui": "stream",
 	"globalEnv": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]
