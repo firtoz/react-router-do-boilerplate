@@ -31,23 +31,7 @@ const app = new Hono<{
 			const { req, env } = c;
 
 			if (env.ENV === "local") {
-				if (req.path === "/check-worker") {
-					return c.text("OK");
-				}
-
-				const ExampleDO = env.EXAMPLE_DO;
-				if (!ExampleDO) {
-					throw new Error("EXAMPLE_DO is not defined?");
-				}
-
-				const fetcher = honoDoFetcherWithName(ExampleDO, "default");
-
-				const response = await fetcher.get({
-					url: "/",
-				});
-				return c.text(
-					`Local environment, ${JSON.stringify(await response.text())}`,
-				);
+				return c.text("OK");
 			}
 
 			let response: Response | undefined;

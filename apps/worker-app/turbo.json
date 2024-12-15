@@ -13,7 +13,7 @@
 		},
 		"dev:check": {
 			"cache": false,
-			"dependsOn": ["dev:check-worker", "example-do#dev:check"]
+			"dependsOn": ["dev:check-worker"]
 		},
 		"dev:check-worker": {
 			"cache": false

@@ -10,20 +10,20 @@ async function checkWorkers(): Promise<boolean> {
 			return true;
 		}
 	} catch (error) {
-		console.error("Error fetching workers.");
+		console.error("Error fetching worker.");
 	}
 	return false;
 }
 
 async function pollWorkers(intervalMs = 1000): Promise<void> {
 	while (true) {
-		console.log("Checking workers...");
+		console.log("Checking worker...");
 		if (await checkWorkers()) {
-			console.log("Workers are ready!");
+			console.log("Worker is ready!");
 			process.exit(0);
 		}
 		console.log(
-			`Workers are not ready yet... Trying again in ${intervalMs / 1000} second${
+			`Worker is not ready yet... Trying again in ${intervalMs / 1000} second${
 				intervalMs / 1000 === 1 ? "" : "s"
 			}.`,
 		);

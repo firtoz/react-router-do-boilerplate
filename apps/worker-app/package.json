@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"deploy": "wrangler deploy",
-		"dev:check": "vite-node scripts/check-dev.ts",
+		"dev:check": "vite-node scripts/check-durable-objects.ts",
 		"dev:check-worker": "vite-node scripts/check-worker.ts",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
 		"start": "wrangler dev",

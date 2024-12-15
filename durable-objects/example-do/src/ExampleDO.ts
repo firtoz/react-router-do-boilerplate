@@ -251,6 +251,6 @@ export class ExampleDO extends DurableObject<Env> implements DOWithHonoApp {
 
 export default {
 	fetch: new Hono().get("/", (c) => {
-		return c.text("Worker loaded.");
+		return c.text("OK");
 	}).fetch,
 };

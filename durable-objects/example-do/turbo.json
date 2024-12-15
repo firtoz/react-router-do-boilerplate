@@ -5,9 +5,6 @@
 		"dev": {
 			"dependsOn": ["worker-app#dev:check-worker"]
 		},
-		"dev:check": {
-			"cache": false
-		},
 		"deploy-durable-objects": {
 			"inputs": ["wrangler.json", "src/**/*"],
 			"outputLogs": "new-only",
