@@ -5,7 +5,7 @@
 		"dev": {
 			"dependsOn": ["worker-app#dev:check-worker"]
 		},
-		"deploy-durable-objects": {
+		"deploy:durable-objects": {
 			"dependsOn": ["worker-app#check-wrangler-env"],
 			"inputs": ["wrangler.json", "src/**/*"],
 			"outputLogs": "new-only",

@@ -3,7 +3,7 @@ import type {
 	LiveParticipant,
 	Pointer,
 	ServerMessage,
-} from "cloudflare-worker-config";
+} from "example-do/types";
 import { env } from "hono/adapter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 

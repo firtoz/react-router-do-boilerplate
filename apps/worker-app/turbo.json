@@ -2,7 +2,7 @@
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
 	"tasks": {
-		"deploy": {
+		"deploy:worker": {
 			"dependsOn": ["worker-app#check-wrangler-env", "web-app#build"],
 			"inputs": ["wrangler.json", "../../web-app/build/**/*"],
 			"outputLogs": "new-only",

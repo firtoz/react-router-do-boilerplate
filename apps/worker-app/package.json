@@ -5,8 +5,8 @@
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"check-wrangler-env": "bun scripts/check-wrangler-env.ts",
+		"deploy:worker": "wrangler deploy",
+		"check-wrangler-env": "bun --env-file ../.env scripts/check-wrangler-env.ts",
 		"dev:check": "bun scripts/check-durable-objects.ts",
 		"dev:check-worker": "bun scripts/check-worker.ts",
 		"dev": "wrangler dev -e local --show-interactive-dev-session false --ip 0.0.0.0",
@@ -28,7 +28,7 @@
 		"cloudflare-worker-config": "workspace:*",
 		"postcss": "^8.4.49",
 		"tailwindcss": "^3.4.17",
-		"scene-do": "workspace:*",
+		"example-do": "workspace:*",
 		"typescript": "^5.7.2",
 		"vite-node": "^2.1.8",
 		"wrangler": "3.99.0"

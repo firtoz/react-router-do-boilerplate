@@ -1,4 +1,4 @@
-import type { Pointer } from "cloudflare-worker-config";
+import type { Pointer } from "example-do/types";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { usePerfectCursor } from "./hooks/usePerfectCursor";
 
