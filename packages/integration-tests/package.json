@@ -7,14 +7,14 @@
 		"test:watch": "NODE_OPTIONS='--import tsx/esm' vitest"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.5.36",
-		"@cloudflare/workers-types": "^4.20241205.0",
+		"@cloudflare/vitest-pool-workers": "^0.5.40",
+		"@cloudflare/workers-types": "^4.20241218.0",
 		"@types/node": "^22.10.2",
 		"@vitest/utils": "2.1.8",
 		"example-do": "workspace:*",
 		"typescript": "^5.7.2",
 		"vitest": "2.1.8",
 		"worker-app": "workspace:*",
-		"wrangler": "^3.95.0"
+		"wrangler": "^3.99.0"
 	}
 }

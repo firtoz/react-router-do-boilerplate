@@ -20,17 +20,17 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@cloudflare/workers-types": "^4.20241205.0",
+		"@cloudflare/workers-types": "^4.20241218.0",
 		"@greybox/biome-config": "^1.3.0",
 		"@greybox/shared-tsconfig": "^1.3.0",
 		"@types/node": "^22.10.2",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
 		"postcss": "^8.4.49",
-		"tailwindcss": "^3.4.16",
+		"tailwindcss": "^3.4.17",
 		"typescript": "^5.7.2",
 		"vite-node": "^2.1.8",
-		"wrangler": "3.95.0"
+		"wrangler": "3.99.0"
 	},
 	"engines": {
 		"node": ">=20.0.0"

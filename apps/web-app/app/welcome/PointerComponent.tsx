@@ -9,7 +9,7 @@ export const PointerComponent = ({
 }: {
 	pointer: Pointer;
 	color: string;
-	containerRef: React.RefObject<HTMLDivElement>;
+	containerRef: React.RefObject<HTMLDivElement | null>;
 }) => {
 	const rPointer = useRef<SVGSVGElement>(null);
 
