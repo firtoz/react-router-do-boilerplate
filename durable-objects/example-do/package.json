@@ -24,6 +24,7 @@
 		"lint": "tsc --noEmit && biome check --write"
 	},
 	"exports": {
+		"./package.json": "./package.json",
 		"./*": "./src/*.ts"
 	}
 }
