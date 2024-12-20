@@ -2,10 +2,10 @@ import { DurableObject } from "cloudflare:workers";
 import type { DOWithHonoApp } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import { zValidator } from "@hono/zod-validator";
 import type { Env } from "cloudflare-worker-config";
-import type { ServerMessage, ClientMessage, LiveParticipant } from "./types";
 import Color from "color";
 import { type Context, Hono, type TypedResponse } from "hono";
 import { z } from "zod";
+import type { ClientMessage, LiveParticipant, ServerMessage } from "./types";
 
 export class WebsocketWrapper<TAttachment, TMessage> {
 	public constructor(public webSocket: WebSocket) {}
