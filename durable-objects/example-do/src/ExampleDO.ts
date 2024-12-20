@@ -1,12 +1,10 @@
 import { DurableObject } from "cloudflare:workers";
 import type { DOWithHonoApp } from "@greybox/hono-typed-fetcher/honoDoFetcher";
 import { zValidator } from "@hono/zod-validator";
-import type {
-	ClientMessage,
-	Env,
-	LiveParticipant,
-	ServerMessage,
-} from "cloudflare-worker-config";
+import type { Env } from "cloudflare-worker-config";
+import type { ServerMessage } from "./types";
+import type { ClientMessage } from "./types";
+import type { LiveParticipant } from "./types";
 import Color from "color";
 import { type Context, Hono, type TypedResponse } from "hono";
 import { z } from "zod";
