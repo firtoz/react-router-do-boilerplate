@@ -4,7 +4,6 @@ import type {
 	Pointer,
 	ServerMessage,
 } from "example-do/types";
-import { env } from "hono/adapter";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export const useLiveParticipants = (env: "local" | "production") => {

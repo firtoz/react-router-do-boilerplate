@@ -26,9 +26,9 @@
 		"@types/node": "^22.10.2",
 		"autoprefixer": "^10.4.20",
 		"cloudflare-worker-config": "workspace:*",
+		"example-do": "workspace:*",
 		"postcss": "^8.4.49",
 		"tailwindcss": "^3.4.17",
-		"example-do": "workspace:*",
 		"typescript": "^5.7.2",
 		"vite-node": "^2.1.8",
 		"wrangler": "3.99.0"

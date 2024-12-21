@@ -16,13 +16,15 @@ export default async function handleRequest(
 	const userAgent = request.headers.get("user-agent");
 	let responseStatusCode = _responseStatusCode;
 
+	const controller = new AbortController();
+	setTimeout(() => {
+		controller.abort();
+	}, ABORT_DELAY);
+
 	const body = await renderToReadableStream(
-		<ServerRouter
-			context={routerContext}
-			url={request.url}
-			abortDelay={ABORT_DELAY}
-		/>,
+		<ServerRouter context={routerContext} url={request.url} />,
 		{
+			signal: controller.signal,
 			onError(error: unknown) {
 				responseStatusCode = 500;
 				// Log streaming rendering errors from inside the shell.  Don't log
@@ -34,6 +36,7 @@ export default async function handleRequest(
 			},
 		},
 	);
+
 	shellRendered = true;
 
 	// Ensure requests from bots and SPA Mode renders wait for all content to load before responding
