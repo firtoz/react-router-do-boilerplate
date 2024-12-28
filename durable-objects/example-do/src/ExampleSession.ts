@@ -1,7 +1,7 @@
+import { BaseSession } from "@greybox/durable-object-helpers/BaseSession";
 import type { Env } from "cloudflare-worker-config";
 import Color from "color";
 import type { ClientMessage, LiveParticipant, ServerMessage } from "./types";
-import { BaseSession } from "@greybox/durable-object-helpers/BaseSession";
 
 type Super = BaseSession<Env, LiveParticipant, ServerMessage, ClientMessage>;
 
@@ -70,4 +70,6 @@ export class ExampleSession extends BaseSession<
 			true,
 		);
 	};
+
+	handleBufferMessage: Super["handleBufferMessage"] = async (_message) => {};
 }

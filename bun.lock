@@ -17,7 +17,7 @@
         "@greybox/shared-tsconfig": "^1.3.1",
         "@greybox/wrangler-config-helper": "^2.1.1",
         "@react-router/cloudflare": "^7.1.1",
-        "hono": "^4.6.14",
+        "hono": "^4.6.15",
         "isbot": "^5.1.19",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
@@ -74,10 +74,10 @@
       "name": "example-do",
       "version": "1.0.0",
       "dependencies": {
-        "@greybox/durable-object-helpers": "^1.1.0",
+        "@greybox/durable-object-helpers": "^2.0.0",
         "@hono/zod-validator": "^0.4.2",
         "@types/color": "^4.2.0",
-        "hono": "^4.6.14",
+        "hono": "^4.6.15",
         "perfect-cursors": "^1.0.5",
         "zod": "^3.24.1",
       },
@@ -272,7 +272,7 @@
 
     "@greybox/biome-config": ["@greybox/biome-config@1.3.1", "", {}, "sha512-5LIyTQc+LlaW/S616nfBWfaT35cp/mdOwoDBeZkPZ48M24Mih2hCJhZ62fch7ewBFrXaOCvXNcIjmQHKeMlT5Q=="],
 
-    "@greybox/durable-object-helpers": ["@greybox/durable-object-helpers@1.1.0", "", { "dependencies": { "@greybox/hono-typed-fetcher": "2.1.1" }, "peerDependencies": { "hono": "^4.6.14" } }, "sha512-mTmfpeWSesps05GMDn0u7rary5mBRqZQJJ/eDp29aWn19rx2zFxiHsvBOMl8F7HS2tfsepPOD95pnPnvc4WuLg=="],
+    "@greybox/durable-object-helpers": ["@greybox/durable-object-helpers@2.0.0", "", { "dependencies": { "@greybox/hono-typed-fetcher": "2.1.1" }, "peerDependencies": { "hono": "^4.6.14" } }, "sha512-LwS/G2EcRM+z9IKPqEPsX6wHHj8JQrYqxNjFtU49oOR/PzTipUXi7OulEieb+trZaCq26hc7YeAmHqASJFhrWQ=="],
 
     "@greybox/hono-typed-fetcher": ["@greybox/hono-typed-fetcher@2.1.1", "", { "peerDependencies": { "hono": "^4.6.14" } }, "sha512-ZUR1MgePKcdOjE05UPovzL5hhWg3SsDapxcEMT1w97zIJyWfo39W116iV3kzeVqSoyvFCW+mMhazAxbigwfJOw=="],
 
@@ -550,7 +550,7 @@
 
     "estree-walker": ["estree-walker@3.0.3", "", { "dependencies": { "@types/estree": "^1.0.0" } }, "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g=="],
 
-    "example-do": ["example-do@workspace:durable-objects/example-do", { "dependencies": { "@greybox/durable-object-helpers": "^1.1.0", "@hono/zod-validator": "^0.4.2", "@types/color": "^4.2.0", "hono": "^4.6.14", "perfect-cursors": "^1.0.5", "zod": "^3.24.1" }, "devDependencies": { "@cloudflare/workers-types": "^4.20241224.0", "@greybox/biome-config": "^1.3.1", "@greybox/shared-tsconfig": "^1.3.1", "color": "^4.2.3" } }],
+    "example-do": ["example-do@workspace:durable-objects/example-do", { "dependencies": { "@greybox/durable-object-helpers": "^2.0.0", "@hono/zod-validator": "^0.4.2", "@types/color": "^4.2.0", "hono": "^4.6.15", "perfect-cursors": "^1.0.5", "zod": "^3.24.1" }, "devDependencies": { "@cloudflare/workers-types": "^4.20241224.0", "@greybox/biome-config": "^1.3.1", "@greybox/shared-tsconfig": "^1.3.1", "color": "^4.2.3" } }],
 
     "exit-hook": ["exit-hook@2.2.1", "", {}, "sha512-eNTPlAD67BmP31LDINZ3U7HSF8l57TxOY2PmBJ1shpCvpnxBF93mWCE8YHBnXs8qiUZJc9WDcWIeC3a2HIAMfw=="],
 
@@ -604,7 +604,7 @@
 
     "hasown": ["hasown@2.0.2", "", { "dependencies": { "function-bind": "^1.1.2" } }, "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ=="],
 
-    "hono": ["hono@4.6.14", "", {}, "sha512-j4VkyUp2xazGJ8eCCLN1Vm/bxdvm/j5ZuU9AIjLu9vapn2M44p9L3Ktr9Vnb2RN2QtcR/wVjZVMlT5k7GJQgPw=="],
+    "hono": ["hono@4.6.15", "", {}, "sha512-OiQwvAOAaI2JrABBH69z5rsctHDzFzIKJge0nYXgtzGJ0KftwLWcBXm1upJC23/omNRtnqM0gjRMbtXshPdqhQ=="],
 
     "hosted-git-info": ["hosted-git-info@6.1.3", "", { "dependencies": { "lru-cache": "^7.5.1" } }, "sha512-HVJyzUrLIL1c0QmviVh5E8VGyUS7xCFPS6yydaVd1UegW+ibV/CohqTH9MkOLDp5o+rb82DMo77PTuc9F/8GKw=="],
 
@@ -974,7 +974,7 @@
 
     "vitest": ["vitest@2.1.8", "", { "dependencies": { "@vitest/expect": "2.1.8", "@vitest/mocker": "2.1.8", "@vitest/pretty-format": "^2.1.8", "@vitest/runner": "2.1.8", "@vitest/snapshot": "2.1.8", "@vitest/spy": "2.1.8", "@vitest/utils": "2.1.8", "chai": "^5.1.2", "debug": "^4.3.7", "expect-type": "^1.1.0", "magic-string": "^0.30.12", "pathe": "^1.1.2", "std-env": "^3.8.0", "tinybench": "^2.9.0", "tinyexec": "^0.3.1", "tinypool": "^1.0.1", "tinyrainbow": "^1.2.0", "vite": "^5.0.0", "vite-node": "2.1.8", "why-is-node-running": "^2.3.0" }, "peerDependencies": { "@edge-runtime/vm": "*", "@types/node": "^18.0.0 || >=20.0.0", "@vitest/browser": "2.1.8", "@vitest/ui": "2.1.8", "happy-dom": "*", "jsdom": "*" }, "optionalPeers": ["@edge-runtime/vm", "@types/node", "@vitest/browser", "@vitest/ui", "happy-dom", "jsdom"], "bin": { "vitest": "vitest.mjs" } }, "sha512-1vBKTZskHw/aosXqQUlVWWlGUxSJR8YtiyZDJAFeW2kPAeX6S3Sool0mjspO+kXLuxVWlEDDowBAeqeAQefqLQ=="],
 
-    "web-app": ["web-app@workspace:apps/web-app", { "dependencies": { "@cloudflare/kv-asset-handler": "^0.3.4", "@greybox/hono-typed-fetcher": "^2.1.1", "@greybox/shared-tsconfig": "^1.3.1", "@greybox/wrangler-config-helper": "^2.1.1", "@react-router/cloudflare": "^7.1.1", "hono": "^4.6.14", "isbot": "^5.1.19", "react": "^19.0.0", "react-dom": "^19.0.0", "react-router": "^7.1.1" }, "devDependencies": { "@biomejs/biome": "^1.9.4", "@cloudflare/workers-types": "^4.20241224.0", "@greybox/biome-config": "^1.3.1", "@greybox/shared-tsconfig": "^1.3.1", "@hiogawa/vite-node-miniflare": "^0.1.1", "@iarna/toml": "^2.2.5", "@react-router/dev": "^7.1.1", "@types/react": "^19.0.2", "@types/react-dom": "^19.0.2", "add": "^2.0.6", "autoprefixer": "^10.4.20", "cloudflare-worker-config": "packages/cloudflare-worker-config", "concurrently": "^9.1.1", "postcss": "^8.4.49", "tailwindcss": "^3.4.17", "tsx": "^4.19.2", "typescript": "^5.7.2", "vite": "^6.0.6", "vite-tsconfig-paths": "^5.1.4", "wrangler": "3.99.0" } }],
+    "web-app": ["web-app@workspace:apps/web-app", { "dependencies": { "@cloudflare/kv-asset-handler": "^0.3.4", "@greybox/hono-typed-fetcher": "^2.1.1", "@greybox/shared-tsconfig": "^1.3.1", "@greybox/wrangler-config-helper": "^2.1.1", "@react-router/cloudflare": "^7.1.1", "hono": "^4.6.15", "isbot": "^5.1.19", "react": "^19.0.0", "react-dom": "^19.0.0", "react-router": "^7.1.1" }, "devDependencies": { "@biomejs/biome": "^1.9.4", "@cloudflare/workers-types": "^4.20241224.0", "@greybox/biome-config": "^1.3.1", "@greybox/shared-tsconfig": "^1.3.1", "@hiogawa/vite-node-miniflare": "^0.1.1", "@iarna/toml": "^2.2.5", "@react-router/dev": "^7.1.1", "@types/react": "^19.0.2", "@types/react-dom": "^19.0.2", "add": "^2.0.6", "autoprefixer": "^10.4.20", "cloudflare-worker-config": "packages/cloudflare-worker-config", "concurrently": "^9.1.1", "postcss": "^8.4.49", "tailwindcss": "^3.4.17", "tsx": "^4.19.2", "typescript": "^5.7.2", "vite": "^6.0.6", "vite-tsconfig-paths": "^5.1.4", "wrangler": "3.99.0" } }],
 
     "webidl-conversions": ["webidl-conversions@4.0.2", "", {}, "sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg=="],
 

@@ -1,12 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-	runInDurableObject,
-	SELF,
-} from "cloudflare:test";
-import type { Env, ServerMessage } from "cloudflare-worker-config";
+import { env, SELF } from "cloudflare:test";
+import type { Env } from "cloudflare-worker-config";
+import type { ServerMessage } from "../../../durable-objects/example-do/src/types";
 
 declare module "cloudflare:test" {
 	interface ProvidedEnv extends Env {}

@@ -1,9 +1,9 @@
+import { BaseWebSocketDO } from "@greybox/durable-object-helpers/BaseWebSocketDO";
 import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
-import { ExampleSession } from "./ExampleSession";
 import type { Env } from "cloudflare-worker-config";
 import { Hono, type TypedResponse } from "hono";
-import { BaseWebSocketDO } from "@greybox/durable-object-helpers/BaseWebSocketDO";
+import { z } from "zod";
+import { ExampleSession } from "./ExampleSession";
 
 type Super = BaseWebSocketDO<Env, ExampleSession>;
 

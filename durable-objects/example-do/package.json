@@ -5,10 +5,10 @@
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
 	"dependencies": {
-		"@greybox/durable-object-helpers": "^1.1.0",
+		"@greybox/durable-object-helpers": "^2.0.0",
 		"@hono/zod-validator": "^0.4.2",
 		"@types/color": "^4.2.0",
-		"hono": "^4.6.14",
+		"hono": "^4.6.15",
 		"perfect-cursors": "^1.0.5",
 		"zod": "^3.24.1"
 	},
