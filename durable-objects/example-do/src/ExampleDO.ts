@@ -1,11 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
-import type { Env } from "cloudflare-worker-config";
-import { type Context, Hono, type TypedResponse } from "hono";
 import { z } from "zod";
-import { BaseWebSocketDO } from "./BaseWebSocketDO";
 import { ExampleSession } from "./ExampleSession";
+import type { Env } from "cloudflare-worker-config";
+import { Hono, type TypedResponse } from "hono";
+import { BaseWebSocketDO } from "@greybox/durable-object-helpers/BaseWebSocketDO";
 
-export class ExampleDO extends BaseWebSocketDO<ExampleSession> {
+type Super = BaseWebSocketDO<Env, ExampleSession>;
+
+export class ExampleDO extends BaseWebSocketDO<Env, ExampleSession> {
 	app = this.getBaseApp()
 		.get("/", (c) => {
 			return c.text(
@@ -40,13 +42,13 @@ export class ExampleDO extends BaseWebSocketDO<ExampleSession> {
 			},
 		);
 
-	protected createSession(websocket: WebSocket): ExampleSession {
+	protected createSession: Super["createSession"] = (websocket) => {
 		return new ExampleSession(websocket, this.sessions);
-	}
+	};
 }
 
 export default {
 	fetch: new Hono().get("/", (c) => {
 		return c.text("OK");
 	}).fetch,
-};
+} satisfies ExportedHandler<Env>;

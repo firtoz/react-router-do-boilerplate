@@ -1,15 +1,17 @@
 import type { Env } from "cloudflare-worker-config";
 import Color from "color";
-import type { Context } from "hono";
-import { BaseSession } from "./BaseSession";
 import type { ClientMessage, LiveParticipant, ServerMessage } from "./types";
+import { BaseSession } from "@greybox/durable-object-helpers/BaseSession";
+
+type Super = BaseSession<Env, LiveParticipant, ServerMessage, ClientMessage>;
 
 export class ExampleSession extends BaseSession<
+	Env,
 	LiveParticipant,
 	ServerMessage,
 	ClientMessage
 > {
-	protected createData(_ctx: Context<{ Bindings: Env }>): LiveParticipant {
+	protected createData: Super["createData"] = (_ctx): LiveParticipant => {
 		return {
 			id: crypto.randomUUID(),
 			color: Color.hsl(Math.random() * 360, 50, 50)
@@ -17,9 +19,9 @@ export class ExampleSession extends BaseSession<
 				.string(),
 			pointers: [],
 		};
-	}
+	};
 
-	async handleMessage(message: ClientMessage): Promise<void> {
+	handleMessage: Super["handleMessage"] = async (message) => {
 		switch (message.type) {
 			case "join": {
 				this.broadcast(
@@ -55,9 +57,9 @@ export class ExampleSession extends BaseSession<
 				break;
 			}
 		}
-	}
+	};
 
-	async handleClose(): Promise<void> {
+	handleClose: Super["handleClose"] = async () => {
 		this.data.pointers = [];
 
 		this.broadcast(
@@ -67,5 +69,5 @@ export class ExampleSession extends BaseSession<
 			},
 			true,
 		);
-	}
+	};
 }

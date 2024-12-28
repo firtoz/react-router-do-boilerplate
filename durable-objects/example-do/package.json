@@ -5,6 +5,7 @@
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
 	"dependencies": {
+		"@greybox/durable-object-helpers": "^1.1.0",
 		"@hono/zod-validator": "^0.4.2",
 		"@types/color": "^4.2.0",
 		"hono": "^4.6.14",
@@ -12,9 +13,9 @@
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241218.0",
-		"@greybox/biome-config": "^1.3.0",
-		"@greybox/shared-tsconfig": "^1.3.0",
+		"@cloudflare/workers-types": "^4.20241224.0",
+		"@greybox/biome-config": "^1.3.1",
+		"@greybox/shared-tsconfig": "^1.3.1",
 		"color": "^4.2.3"
 	},
 	"scripts": {
