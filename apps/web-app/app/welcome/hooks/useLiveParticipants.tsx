@@ -6,7 +6,7 @@ import type {
 } from "example-do/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-export const useLiveParticipants = (env: "local" | "production") => {
+export const useLiveParticipants = () => {
 	const [participants, setParticipants] = useState<
 		Map<string, LiveParticipant>
 	>(new Map());
@@ -32,11 +32,7 @@ export const useLiveParticipants = (env: "local" | "production") => {
 			return null;
 		}
 
-		const ws = new WebSocket(
-			env === "local"
-				? `ws://${window.location.hostname}:8787/websocket`
-				: "/websocket",
-		);
+		const ws = new WebSocket("/websocket");
 
 		ws.onmessage = (event) => {
 			const parsed = JSON.parse(event.data) as ServerMessage;
@@ -82,7 +78,7 @@ export const useLiveParticipants = (env: "local" | "production") => {
 		};
 
 		return ws;
-	}, [env]);
+	}, []);
 
 	useEffect(() => {
 		if (!websocket) {

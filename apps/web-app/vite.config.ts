@@ -81,6 +81,13 @@ export default defineConfig(({ isSsrBuild }): UserConfig => {
 				clientPort: 5175,
 				port: 5175,
 			},
+			proxy: {
+				"/websocket": {
+					ws: true,
+					changeOrigin: true,
+					target: "ws://localhost:8787",
+				},
+			},
 		},
 	} satisfies UserConfig;
 });

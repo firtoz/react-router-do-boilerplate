@@ -8,7 +8,7 @@ export function Welcome({
 	env,
 	message,
 }: { env: "local" | "production"; message: React.ReactNode }) {
-	const { participants, containerRef } = useLiveParticipants(env);
+	const { participants, containerRef } = useLiveParticipants();
 
 	return (
 		<main className="flex items-center justify-center pt-16 pb-4 touch-none">
