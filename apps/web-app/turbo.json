@@ -10,7 +10,6 @@
 				"react-router.config.ts",
 				"vite.config.ts",
 				"load-context.ts",
-				"postcss.config.js",
 				"../worker-app/wrangler.json",
 				"../worker-app/src/**/*.ts",
 				"package.json"

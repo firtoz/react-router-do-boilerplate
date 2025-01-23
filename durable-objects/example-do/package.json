@@ -5,15 +5,15 @@
 	"description": "Example Durable Object",
 	"main": "src/ExampleDO.ts",
 	"dependencies": {
-		"@greybox/durable-object-helpers": "^2.0.0",
+		"@greybox/durable-object-helpers": "^2.1.1",
 		"@hono/zod-validator": "^0.4.2",
 		"@types/color": "^4.2.0",
-		"hono": "^4.6.15",
+		"hono": "^4.6.18",
 		"perfect-cursors": "^1.0.5",
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241224.0",
+		"@cloudflare/workers-types": "^4.20250121.0",
 		"@greybox/biome-config": "^1.3.1",
 		"@greybox/shared-tsconfig": "^1.3.1",
 		"color": "^4.2.3"
