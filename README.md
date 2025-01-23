@@ -43,6 +43,18 @@ In the project directory, you can run:
 Runs the app in development mode.
 Open [http://localhost:5137](http://localhost:5137) to view it in your browser.
 
+Note: The development server is configured with a WebSocket proxy for local development. If you need to add more WebSocket endpoints, you'll need to adjust the proxy configuration in `apps/web-app/vite.config.ts`. The default configuration is:
+
+```ts
+proxy: {
+  "/websocket": {
+    ws: true,
+    changeOrigin: true,
+    target: "ws://localhost:8787",
+  },
+},
+```
+
 ### `bun run build`
 
 Builds the app for production.
