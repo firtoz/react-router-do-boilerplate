@@ -8,13 +8,13 @@
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.41",
-		"@cloudflare/workers-types": "^4.20250121.0",
-		"@types/node": "^22.10.9",
-		"@vitest/utils": "3.0.3",
+		"@cloudflare/workers-types": "^4.20250224.0",
+		"@types/node": "^22.13.8",
+		"@vitest/utils": "3.0.7",
 		"example-do": "workspace:*",
-		"typescript": "^5.7.3",
-		"vitest": "2.1.8",
+		"typescript": "^5.8.2",
+		"vitest": "2.1.9",
 		"worker-app": "workspace:*",
-		"wrangler": "^3.105.0"
+		"wrangler": "^3.111.0"
 	}
 }
