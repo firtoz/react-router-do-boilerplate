@@ -16,7 +16,7 @@
 		"@cloudflare/workers-types": "^4.20250224.0",
 		"@greybox/biome-config": "^1.4.0",
 		"@greybox/shared-tsconfig": "^1.4.0",
-		"color": "^4.2.3"
+		"color": "^5.0.0"
 	},
 	"scripts": {
 		"deploy:durable-objects": "wrangler deploy",

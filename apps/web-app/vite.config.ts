@@ -2,10 +2,9 @@ import path from "node:path";
 import { WranglerConfigHelper } from "@greybox/wrangler-config-helper";
 import { reactRouter } from "@react-router/dev/vite";
 import { cloudflareDevProxy } from "@react-router/dev/vite/cloudflare";
-import autoprefixer from "autoprefixer";
-import tailwindcss from "tailwindcss";
 import { type UserConfig, defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ isSsrBuild }): UserConfig => {
 	const workerAppDir = path.resolve(__dirname, "../worker-app");
@@ -25,11 +24,6 @@ export default defineConfig(({ isSsrBuild }): UserConfig => {
 					}
 				: undefined,
 		},
-		css: {
-			postcss: {
-				plugins: [tailwindcss, autoprefixer],
-			},
-		},
 		ssr: {
 			target: "webworker",
 			resolve: {
@@ -47,6 +41,7 @@ export default defineConfig(({ isSsrBuild }): UserConfig => {
 			},
 		},
 		plugins: [
+			tailwindcss(),
 			cloudflareDevProxy({
 				configPath: patchedWranglerConfigPath,
 				environment: wranglerEnvironment,
